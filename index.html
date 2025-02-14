@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Map of Vladivostok</title>
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        
+        <!-- Maplibre GL -->
+        <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+        <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet" />
+
+        <!-- Maplibre GL Leaflet  -->
+        <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet/leaflet-maplibre-gl.js"></script>
+    </head>
+    <body>
+        <div id="map" style="width: 100%; height: 800px"></div>
+<script>
+    const map = L.map('map').setView([43.103, 131.905], 12);
+    
+    L.maplibreGL({
+        style: 'https://tiles.openfreemap.org/styles/positron'
+        //style: './h3pyl4lne.json'
+    }).addTo(map);
+</script>
+    </body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Map of Vladivostok</title>
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+
+    <!-- Maplibre GL -->
+    <link href="https://unpkg.com/maplibre-gl@2.2.1/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@2.2.1/dist/maplibre-gl.js"></script>
+    
+    <!-- Maplibre GL Leaflet  -->
+    <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.20/leaflet-maplibre-gl.js"></script>
+  </head>
+  <body>
+    <div id="map" style="width: 100%; height: 800px"></div>
+    <script>
+        console.log("Hi!")
+        var map = L.map('map').setView([43.103, 131.905], 12);
+        
+        var gl = L.maplibreGL({
+          // style: 'https://tiles.openfreemap.org/styles/positron'
+          style: './posi.json',
+          maxZoom: 19
+        }).addTo(map);
+
+        fetch('./streets.json').then(r => r.json()).then(data => drawStreets(data));
+
+        function drawStreets(data) {
+            Object.keys(data).forEach(k => {
+              const color = getColor(data[k]['gender'])
+              data[k]['parts'].forEach(part => {
+                const kal = L.polyline(part, {color:color}).addTo(map);
+              });
+            });
+        }
+
+        const COLORS = {
+          'f': 'red',
+          'm': 'blue',
+          '-': 'gray',
+          '!': 'purple'
+        }
+  
+        function getColor(key) {
+          return key in COLORS ? COLORS[key] : 'yellow'
+        }
+    </script>
+  </body>
+</html>
