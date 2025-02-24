@@ -47,18 +47,27 @@ def parseXML():
     load_genders()
 
     result = {}
+    unknown = []
     for name in ways:
         if name in genders:
             result[name] = ways[name]
             result[name]['gender'] = genders[name]
+        else:
+            unknown.append(name)
 
     with open('./vvmap/streets.json', 'w') as fd:
         fd.write(json.dumps(result, ensure_ascii=False))
+
+    with open('unknown_streets.txt', 'w') as ud:
+        for name in unknown:
+            ud.write(f'{name}\r\n')
+
 
 def get_nodes(nd):
     #TODO: optimize nodes list
     refs = [n.attrib['ref'] for n in nd]
     return [nodes[r] for r in refs]
+
 
 def load_genders():
     lines = []
@@ -71,8 +80,9 @@ def load_genders():
         if (len(row) > 1):
             genders[row[0]] = row[1]
 
+
 def main():
-    print('OK')
+    print('Parsing...')
     parseXML()
 
 if __name__ == '__main__':
