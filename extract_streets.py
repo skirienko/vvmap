@@ -13,7 +13,7 @@ def parseXML():
     root = tree.getroot()
 
     for nd in root.findall('./node'):
-        nodes[nd.attrib['id']] = (nd.attrib['lat'], nd.attrib['lon'])
+        nodes[nd.attrib['id']] = (float(nd.attrib['lat']), float(nd.attrib['lon']))
     
     # print(f'{len(nodes)} nodes collected')
 
