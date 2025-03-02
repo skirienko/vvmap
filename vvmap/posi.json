@@ -1275,9 +1275,9 @@
         "text-anchor": "top",
         "text-field": [
           "case",
-          ["has", "name:nonlatin"],
-          ["concat", ["get", "name:latin"], "\n", ["get", "name:nonlatin"]],
-          ["coalesce", ["get", "name_en"], ["get", "name"]]
+          ["has", "name:ru"],
+          ["get", "name:ru"],
+          ["get", "name"]
         ],
         "text-font": ["Noto Sans Regular"],
         "text-max-width": 9,
