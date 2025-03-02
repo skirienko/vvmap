@@ -1,5 +1,9 @@
 import xml.etree.ElementTree as ET
 import json
+from simplification.cutil import (
+    simplify_coords,
+    simplify_coords_vw,
+)
 
 filepath = 'map.osm'
 
@@ -12,6 +16,7 @@ def parseXML():
     tree = ET.parse(filepath)
     root = tree.getroot()
 
+    print('Collecting nodes...')
     for nd in root.findall('./node'):
         nodes[nd.attrib['id']] = (float(nd.attrib['lat']), float(nd.attrib['lon']))
     
@@ -28,6 +33,8 @@ def parseXML():
     #with open('streets.csv', 'w') as fd:
     #    for st in streets:
     #        fd.write(f'{st},-\r\n')
+
+    print('Collecting ways...')
     
     # for w in root.findall('./way/tag[@k="highway"]/..'):
     for w in root.findall('./way[tag]'):
@@ -44,6 +51,7 @@ def parseXML():
                     ways[name]['parts'].append(el)
     
     print(f'{len(ways)} ways collected')
+ 
     load_genders()
 
     result = {}
@@ -64,9 +72,12 @@ def parseXML():
 
 
 def get_nodes(nd):
-    #TODO: optimize nodes list
     refs = [n.attrib['ref'] for n in nd]
-    return [nodes[r] for r in refs]
+    # line simplification
+    unsimplified = [nodes[r] for r in refs]
+    # simplify_coords_vw supposed to be slower but nicer
+    simplified = simplify_coords(unsimplified, 0.0001)
+    return simplified
 
 
 def load_genders():
