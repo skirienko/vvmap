@@ -1,6 +1,8 @@
 import * as L from 'leaflet';
 import maplibregl from 'maplibre-gl';
 import '@maplibre/maplibre-gl-leaflet';
+import mapstyleURL from './posi.json';
+import streetsURL from './streets.json?url';
 
 import 'leaflet/dist/leaflet.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -8,7 +10,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 const LEGEND = {
   'f': {color:'#FF3333', descr: 'улицы в честь женщин'},
   'm': {color:'#3333FF', descr: 'улицы в честь мужчин'},
-  '-': {color:'#99AA99', descr: 'нейтральные улица'},
+  '-': {color:'#99AA99', descr: 'нейтральные улицы'},
   '!': {color:'#CC33CC', descr: 'как бы нейтральные, но вообще-то в честь мужчин'},
   '?': {color:'#FFDD66', descr: 'непонятно'}
 }
@@ -21,11 +23,11 @@ const map = L.map('map', {attributionControl:false}).setView([43.103, 131.905], 
 
 var gl = L.maplibreGL({
           // style: 'https://tiles.openfreemap.org/styles/positron'
-          style: './posi.json',
+          style: mapstyleURL,
           maxZoom: 19
         }).addTo(map);
 
-fetch('./streets.json').then(r => r.json()).then(data => drawStreets(data));
+fetch(streetsURL).then(r => r.json()).then(data => drawStreets(data));
 
 const legend = L.control();
 
@@ -37,12 +39,13 @@ legend.onAdd = function(map) {
 legend.addTo(map);
 
 function drawStreets(data) {
-    Object.keys(data).forEach(k => {
-      const color = getColor(data[k]['gender'])
-      data[k]['parts'].forEach(part => {
-        const kal = L.polyline(part, {color:color,opacity:.75}).addTo(map);
-      });
+  console.log("drawStreets")
+  Object.keys(data).forEach(k => {
+    const color = getColor(data[k]['gender'])
+    data[k]['parts'].forEach(part => {
+      L.polyline(part, {color:color,opacity:.75}).bindTooltip(k).addTo(map);
     });
+  });
 }
 
 function renderLegend(leg) {
