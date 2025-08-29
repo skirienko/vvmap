@@ -8,8 +8,10 @@ from simplification.cutil import (
 filepath = 'map.osm'
 
 nodes = {}
+nodes2 = {}
 streets = {}
 ways = {}
+ways2 = {}
 genders = {}
 
 def parseXML():
@@ -19,6 +21,7 @@ def parseXML():
     print('Collecting nodes...')
     for nd in root.findall('./node'):
         nodes[nd.attrib['id']] = (float(nd.attrib['lat']), float(nd.attrib['lon']))
+        nodes2[nd.attrib['id']] = (float(nd.attrib['lon']), float(nd.attrib['lat']))
     
     # print(f'{len(nodes)} nodes collected')
 
@@ -45,16 +48,18 @@ def parseXML():
                 if name not in ways:
                     print(name)
                     ways[name] = {'parts':[]}
+                    ways2[name] = []
                 nd = w.findall('./nd')
                 if len(nd):
-                    el = get_nodes(nd)
-                    ways[name]['parts'].append(el)
+                    ways[name]['parts'].append(get_nodes(nd))
+                    ways2[name].append(get_nodes2(nd))
     
     print(f'{len(ways)} ways collected')
  
     load_genders()
 
     result = {}
+    geojson = {}
     unknown = []
     for name in ways:
         if name in genders:
@@ -63,8 +68,30 @@ def parseXML():
         else:
             unknown.append(name)
 
-    with open('./vvmap/streets.json', 'w') as fd:
-        fd.write(json.dumps(result, ensure_ascii=False))
+    geojson['type'] = 'FeatureCollection'
+    geojson['features'] = []
+    for name in result:
+        feat = {}
+        feat['type'] = 'Feature'
+        feat['properties'] = {}
+        feat['properties']['name'] = name
+        feat['properties']['gender'] = result[name]['gender']
+        feat['geometry'] = {}
+        if len(ways2[name]) == 1:
+            feat['geometry']['type'] = 'LineString'
+            feat['geometry']['coordinates'] = ways2[name][0]
+        else:
+            feat['geometry']['type'] = 'MultiLineString'
+            feat['geometry']['coordinates'] = ways2[name]
+        geojson['features'].append(feat)
+
+
+
+#    with open('./vvmap/streets.json', 'w') as fd:
+#        fd.write(json.dumps(result, ensure_ascii=False))
+
+    with open('./vvmap/src/streets.geojson', 'w') as fd:
+        fd.write(json.dumps(geojson, ensure_ascii=False))
 
     with open('unknown_streets.txt', 'w') as ud:
         for name in unknown:
@@ -76,8 +103,17 @@ def get_nodes(nd):
     # line simplification
     unsimplified = [nodes[r] for r in refs]
     # simplify_coords_vw supposed to be slower but nicer
-    simplified = simplify_coords(unsimplified, 0.0001)
-    return simplified
+    #simplified = simplify_coords(unsimplified, 0.0001)
+    return unsimplified
+
+
+def get_nodes2(nd):
+    refs = [n.attrib['ref'] for n in nd]
+    # line simplification
+    unsimplified = [nodes2[r] for r in refs]
+    # simplify_coords_vw supposed to be slower but nicer
+    # simplified = simplify_coords_vw(unsimplified, 0.0001)
+    return unsimplified
 
 
 def load_genders():

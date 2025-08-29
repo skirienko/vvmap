@@ -1,33 +1,34 @@
 import * as L from 'leaflet';
-import maplibregl from 'maplibre-gl';
 import '@maplibre/maplibre-gl-leaflet';
 import mapstyleURL from './posi.json';
-import streetsURL from './streets.json?url';
+import streetsURL from './streets.geojson?url';
 
 import 'leaflet/dist/leaflet.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 const LEGEND = {
-  'f': {color:'#FF3333', descr: 'улицы в честь женщин'},
-  'm': {color:'#3333FF', descr: 'улицы в честь мужчин'},
-  '-': {color:'#99AA99', descr: 'нейтральные улицы'},
-  '!': {color:'#CC33CC', descr: 'как бы нейтральные, но вообще-то в честь мужчин'},
-  '?': {color:'#FFDD66', descr: 'непонятно'}
+  'f': {color:'#FF3333', description: 'улицы в честь женщин'},
+  'm': {color:'#3333FF', description: 'улицы в честь мужчин'},
+  '-': {color:'#99AA99', description: 'нейтральные улицы'},
+  '!': {color:'#CC33CC', description: 'как бы нейтральные, но вообще-то в честь мужчин'},
+  '?': {color:'#FFDD66', description: 'непонятно'}
 }
-
-console.log("Hi!")
-console.log(L)
-console.log(maplibregl)
 
 const map = L.map('map', {attributionControl:false}).setView([43.103, 131.905], 12);
 
-var gl = L.maplibreGL({
+const gl = L.maplibreGL({
           // style: 'https://tiles.openfreemap.org/styles/positron'
           style: mapstyleURL,
           maxZoom: 19
         }).addTo(map);
 
-fetch(streetsURL).then(r => r.json()).then(data => drawStreets(data));
+const st = ({properties}) => {
+  return {opacity:.75, color:getColor(properties.gender)}
+}
+
+fetch(streetsURL).then(r => r.json()).then(gj => {
+  L.geoJSON(gj, {style:st}).addTo(map);
+})
 
 const legend = L.control();
 
@@ -38,23 +39,13 @@ legend.onAdd = function(map) {
 }
 legend.addTo(map);
 
-function drawStreets(data) {
-  console.log("drawStreets")
-  Object.keys(data).forEach(k => {
-    const color = getColor(data[k]['gender'])
-    data[k]['parts'].forEach(part => {
-      L.polyline(part, {color:color,opacity:.75}).bindTooltip(k).addTo(map);
-    });
-  });
-}
-
-function renderLegend(leg) {
-  if (leg) {
+function renderLegend(el) {
+  if (el) {
     Object.values(LEGEND).forEach(item => {
       const li = document.createElement('li');
       li.setAttribute('style', "color:"+item.color);
-      li.appendChild(document.createTextNode(item.descr));
-      leg.appendChild(li);
+      li.appendChild(document.createTextNode(item.description));
+      el.appendChild(li);
     });
   }
 }
