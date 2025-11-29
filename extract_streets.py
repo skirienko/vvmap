@@ -13,6 +13,7 @@ streets = {}
 ways = {}
 ways2 = {}
 genders = {}
+years = {}
 
 def parseXML():
     tree = ET.parse(filepath)
@@ -57,14 +58,21 @@ def parseXML():
     print(f'{len(ways)} ways collected')
  
     load_genders()
+    generate_geojson('gender', genders)
 
+    load_years()
+    generate_geojson('year', years)
+
+
+def generate_geojson(topic, store):
     result = {}
     geojson = {}
     unknown = []
+
     for name in ways:
-        if name in genders:
+        if name in store:
             result[name] = ways[name]
-            result[name]['gender'] = genders[name]
+            result[name][topic] = store[name]
         else:
             unknown.append(name)
 
@@ -75,7 +83,7 @@ def parseXML():
         feat['type'] = 'Feature'
         feat['properties'] = {}
         feat['properties']['name'] = name
-        feat['properties']['gender'] = result[name]['gender']
+        feat['properties'][topic] = result[name][topic]
         feat['geometry'] = {}
         if len(ways2[name]) == 1:
             feat['geometry']['type'] = 'LineString'
@@ -85,15 +93,10 @@ def parseXML():
             feat['geometry']['coordinates'] = ways2[name]
         geojson['features'].append(feat)
 
-
-
-#    with open('./vvmap/streets.json', 'w') as fd:
-#        fd.write(json.dumps(result, ensure_ascii=False))
-
-    with open('./vvmap/src/streets.geojson', 'w') as fd:
+    with open(f'./vvmap/src/{topic}.geojson', 'w') as fd:
         fd.write(json.dumps(geojson, ensure_ascii=False))
 
-    with open('unknown_streets.txt', 'w') as ud:
+    with open(f'unknown_streets_{topic}.txt', 'w') as ud:
         for name in unknown:
             ud.write(f'{name}\r\n')
 
@@ -126,6 +129,19 @@ def load_genders():
         row = line.split(',')
         if (len(row) > 1):
             genders[row[0]] = row[1]
+
+
+def load_years():
+    lines = []
+    with open('streets_years.csv', 'r') as fd:
+        lines = fd.readlines()
+
+    for line in lines:
+        line = line.strip()
+        row = line.split(',')
+        if (len(row) > 1):
+            if row[1] != '-':
+                years[row[0]] = row[1]
 
 
 def main():
