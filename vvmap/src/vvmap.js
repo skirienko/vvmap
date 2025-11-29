@@ -25,6 +25,17 @@ const YEARS = {
   '2024': {color: '#2222EC', description: '2024'},
   '2025': {color: '#2222EE', description: '2025'},
 }
+const YEARS2 = {
+  '1860': {color: '#AA2222', description: '1860—1907'},
+  '1908': {color: '#2222AA', description: '1908—1921'},
+  '1922': {color: '#2222DB', description: '1922—1960'},
+  '1961': {color: '#2222DD', description: '1961—1984'},
+  '1985': {color: '#2222DF', description: '1985—1991'},
+  '1991': {color: '#2222EA', description: '1991—2001'},
+  '2001': {color: '#2222EC', description: '2001—2011'},
+  '2012': {color: '#2222EE', description: '2012—н.в.'},
+  '?': {color: '#99AA99', description: 'неизвестный год'},
+ }
 
 //const topic = 'gender';
 const topic = 'gender';
@@ -67,6 +78,5 @@ function renderLegend(el) {
 }
 
 function getColor(key) {
-  console.log(key);
   return key in LEGEND ? LEGEND[key].color : LEGEND['?'].color
 }
