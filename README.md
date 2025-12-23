@@ -9,3 +9,8 @@ curl --output map.osm "https://overpass-api.de/api/map?bbox=131.75,42.9,132.4944
 
 python3 extract_streets.py
 ```
+
+ChatGPT suggested URL:
+```bash
+curl -G https://overpass-api.de/api/interpreter --data-urlencode "data@vladivostok.overpassql" -o vladivostok.osm
+```

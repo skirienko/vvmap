@@ -5,7 +5,7 @@ from simplification.cutil import (
     simplify_coords_vw,
 )
 
-filepath = 'map.osm'
+filepath = 'vladivostok.osm'
 
 nodes = {}
 nodes2 = {}
