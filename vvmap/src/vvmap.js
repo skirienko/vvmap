@@ -1,45 +1,20 @@
 import * as L from 'leaflet';
 import '@maplibre/maplibre-gl-leaflet';
 import mapstyleURL from './posi.json';
-import streetsURL from './gender.geojson?url';
+
+import Gender from './Gender';
+import Year from './Year';
 
 import 'leaflet/dist/leaflet.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
-
-const GENDERS = {
-  'f': {color:'#FF3333', description: 'улицы в честь женщин'},
-  'm': {color:'#3333FF', description: 'улицы в честь мужчин'},
-  '-': {color:'#99AA99', description: 'нейтральные улицы'},
-  '!': {color:'#CC33CC', description: 'как бы нейтральные, но вообще-то в честь мужчин'},
-  '?': {color:'#FFDD66', description: 'непонятно'},
-}
-
-const YEARS = {
-  '?': {color: '#99AA99', description: 'неизвестный год'},
-  '1955': {color: '#AA2222', description: '1955'},
-  '2016': {color: '#2222AA', description: '2016'},
-  '2020': {color: '#2222DB', description: '2020'},
-  '2021': {color: '#2222DD', description: '2021'},
-  '2022': {color: '#2222DF', description: '2022'},
-  '2023': {color: '#2222EA', description: '2023'},
-  '2024': {color: '#2222EC', description: '2024'},
-  '2025': {color: '#2222EE', description: '2025'},
-}
-const YEARS2 = {
-  '1860': {color: '#AA2222', description: '1860—1907'},
-  '1908': {color: '#2222AA', description: '1908—1921'},
-  '1922': {color: '#2222DB', description: '1922—1960'},
-  '1961': {color: '#2222DD', description: '1961—1984'},
-  '1985': {color: '#2222DF', description: '1985—1991'},
-  '1991': {color: '#2222EA', description: '1991—2001'},
-  '2001': {color: '#2222EC', description: '2001—2011'},
-  '2012': {color: '#2222EE', description: '2012—н.в.'},
-  '?': {color: '#99AA99', description: 'неизвестный год'},
- }
-
-//const topic = 'gender';
-const topic = 'gender';
-const LEGEND = GENDERS;
+/*
+const routes = [
+  { path: '/', callback: () => console.log('Home page') },
+  { path: '/gender', callback: () => console.log('Gender') },
+  { path: '/year', callback: () => console.log('Year') },
+];
+*/
+const T = new Gender();
 
 const map = L.map('map', {attributionControl:false}).setView([43.103, 131.905], 12);
 
@@ -50,16 +25,19 @@ const gl = L.maplibreGL({
         }).addTo(map);
 
 const st = ({properties}) => {
-  return {opacity:.75, color:getColor(properties[topic])}
+  return {opacity:.75, color:T.getColor(properties[T.topic])}
 }
 
-fetch(streetsURL).then(r => r.json()).then(gj => {
-  L.geoJSON(gj, {style:st}).addTo(map);
+fetch(T.getURL()).then(r => r.json()).then(gj => {
+  L.geoJSON(gj, {
+    style: st,
+    onEachFeature: createPopup,
+  }).addTo(map);
 })
 
 const legend = L.control();
 
-legend.onAdd = function(map) {
+legend.onAdd = function(_map) {
   const ul = L.DomUtil.create('ul', 'legend');
   renderLegend(ul);
   return ul;
@@ -68,7 +46,7 @@ legend.addTo(map);
 
 function renderLegend(el) {
   if (el) {
-    Object.values(LEGEND).forEach(item => {
+    Object.values(T.getLegend()).forEach(item => {
       const li = document.createElement('li');
       li.setAttribute('style', "color:"+item.color);
       li.appendChild(document.createTextNode(item.description));
@@ -77,6 +55,6 @@ function renderLegend(el) {
   }
 }
 
-function getColor(key) {
-  return key in LEGEND ? LEGEND[key].color : LEGEND['?'].color
+function createPopup(feature, layer) {
+  layer.bindPopup(T.getText(feature.properties))
 }

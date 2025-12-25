@@ -1,0 +1,28 @@
+import { Topic, LegendItem } from "./Topic";
+import yearURL from './year.geojson?url';
+
+type YearGJProperties = {
+  name: string,
+  year: string,
+}
+
+const YEARS: Record<string, LegendItem> = {
+  '1860': {from: '1860', to: '1907', color: '#1fc627', description: '1860—1907'},
+  '1908': {from: '1908', to: '1921', color: '#0d7719', description: '1908—1921'},
+  '1922': {from: '1922', to: '1952', color: '#f60909', description: '1922—1960'},
+  '1953': {from: '1953', to: '1960', color: '#c40909', description: '1922—1960'},
+  '1961': {from: '1961', to: '1984', color: '#a51111', description: '1961—1984'},
+  '1985': {from: '1985', to: '1990', color: '#832f0e', description: '1985—1990'},
+  '1991': {from: '1991', to: '2000', color: '#cc1eaf', description: '1991—2000'},
+  '2001': {from: '2001', to: '2011', color: '#722db3', description: '2001—2011'},
+  '2012': {from: '2012', to: '2099', color: '#2222EE', description: '2012—н.в.'},
+  '?': {from: '0', to: '0', color: '#99AA99', description: 'неизвестный год'},
+ }
+
+export default class Year extends Topic {
+  topic = 'year';
+  legend = YEARS;
+  getColor = this.getRangeColor;
+  getText = ({name, year}: YearGJProperties) => `${name}: ${year}`;
+  getURL = () => yearURL;
+}
