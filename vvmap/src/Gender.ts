@@ -1,4 +1,5 @@
 import { Topic, LegendItem } from "./Topic";
+// @ts-ignore
 import genderURL from './gender.geojson?url';
 
 

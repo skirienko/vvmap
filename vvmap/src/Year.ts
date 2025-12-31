@@ -1,4 +1,5 @@
 import { Topic, LegendItem } from "./Topic";
+// @ts-ignore
 import yearURL from './year.geojson?url';
 
 type YearGJProperties = {
