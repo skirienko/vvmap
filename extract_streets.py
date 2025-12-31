@@ -70,9 +70,9 @@ def generate_geojson(topic, store):
     unknown = []
 
     for name in ways:
-        if name in store:
+        if name.lower() in store:
             result[name] = ways[name]
-            result[name][topic] = store[name]
+            result[name][topic] = store[name.lower()]
         else:
             unknown.append(name)
 
@@ -127,8 +127,9 @@ def load_genders():
     for line in lines:
         line = line.strip()
         row = line.split(',')
+        key = row[0].lower()
         if (len(row) > 1):
-            genders[row[0]] = row[1]
+            genders[key] = row[1]
 
 
 def load_years():
@@ -139,9 +140,10 @@ def load_years():
     for line in lines:
         line = line.strip()
         row = line.split(',')
+        key = row[0].lower()
         if (len(row) > 1):
             if row[1] != '-':
-                years[row[0]] = row[1]
+                years[key] = row[1]
 
 
 def main():
