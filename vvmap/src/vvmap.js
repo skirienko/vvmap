@@ -1,24 +1,27 @@
 import * as L from 'leaflet';
 import '@maplibre/maplibre-gl-leaflet';
 import mapstyleURL from './posi.json';
+import Router from './Router';
 
 import Gender from './Gender';
 import Year from './Year';
 
 import 'leaflet/dist/leaflet.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
-/*
+
+let T;
+
 const routes = [
-  { path: '/', callback: () => console.log('Home page') },
-  { path: '/gender', callback: () => console.log('Gender') },
-  { path: '/year', callback: () => console.log('Year') },
+  { path: '/gender', callback: () => {T = new Gender() }},
+  { path: '/year', callback: () => { T = new Year() } },
 ];
-*/
-const T = new Gender();
+new Router(routes);
+
+document.title = T.getTitle();
 
 const map = L.map('map', {attributionControl:false}).setView([43.103, 131.905], 12);
 
-const gl = L.maplibreGL({
+L.maplibreGL({
           // style: 'https://tiles.openfreemap.org/styles/positron'
           style: mapstyleURL,
           maxZoom: 19

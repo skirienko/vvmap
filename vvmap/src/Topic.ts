@@ -7,15 +7,21 @@ export type LegendItem = {
 
 
 export abstract class Topic {
+
+  title: string = "Карта Владивостока";
     
   legend: Record<string, LegendItem> = {};
 
+  getTitle() {
+    return this.title;
+  }
+  
   getLegend() {
     return this.legend;
   }
 
   getExactColor(key: string) {
-    return key in this.legend ? this.legend[key].color : this.legend['?'].color
+    return key in this.legend ? this.legend[key].color : this.legend['?'].color;
   }
 
   getRangeColor(value: string) {
