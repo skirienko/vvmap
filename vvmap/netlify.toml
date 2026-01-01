@@ -1,0 +1,5 @@
+[[redirects]]  
+  from = "/*"                 # Match all routes  
+  to = "/index.html"          # Serve index.html  
+  status = 200                # 200 OK status code  
+  force = true                # Optional: Override Netlify's default 404 page  
