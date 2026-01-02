@@ -12,8 +12,10 @@ nodes2 = {}
 streets = {}
 ways = {}
 ways2 = {}
+
 genders = {}
 years = {}
+types = {}
 
 def parseXML():
     tree = ET.parse(filepath)
@@ -62,6 +64,9 @@ def parseXML():
 
     load_years()
     generate_geojson('year', years)
+
+    load_types()
+    generate_geojson('type', types)
 
 
 def generate_geojson(topic, store):
@@ -119,11 +124,16 @@ def get_nodes2(nd):
     return unsimplified
 
 
-def load_genders():
+def read_lines(filename):
     lines = []
-    with open('streets_genders.csv', 'r') as fd:
+    with open(filename, 'r') as fd:
         lines = fd.readlines()
+    
+    return lines
 
+
+def load_genders():
+    lines = read_lines('streets_genders.csv')
     for line in lines:
         line = line.strip()
         row = line.split(',')
@@ -133,10 +143,7 @@ def load_genders():
 
 
 def load_years():
-    lines = []
-    with open('streets_years.csv', 'r') as fd:
-        lines = fd.readlines()
-
+    lines = read_lines('streets_years.csv')
     for line in lines:
         line = line.strip()
         row = line.split(',')
@@ -145,6 +152,16 @@ def load_years():
             if row[1] != '-':
                 years[key] = row[1]
 
+
+def load_types():
+    lines = read_lines('streets_types.csv')
+    for line in lines:
+        line = line.strip()
+        row = line.split(',')
+        key = row[0].lower()
+        if (len(row) > 1):
+            if row[1] != '-':
+                types[key] = row[1]
 
 def main():
     print('Parsing...')

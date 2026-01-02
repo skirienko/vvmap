@@ -5,6 +5,7 @@ import Router from './Router';
 
 import Gender from './Gender';
 import Year from './Year';
+import Type from './Type';
 
 import 'leaflet/dist/leaflet.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -14,6 +15,7 @@ let T;
 const routes = [
   { path: '/gender', callback: () => {T = new Gender() }},
   { path: '/year', callback: () => { T = new Year() } },
+  { path: '/type', callback: () => { T = new Type() } },
 ];
 new Router(routes);
 
