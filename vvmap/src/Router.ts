@@ -5,9 +5,11 @@ export interface Route {
 
 export default class Router {
   routes: Route[];
+  currentRoute: Route;
   
   constructor(routes: Route[]) {
     this.routes = routes;
+    this.currentRoute = routes[0];
     this._loadInitialRoute();
   }
 
@@ -24,6 +26,7 @@ export default class Router {
   loadRoute(path: string) {
     const matchedRoute = this._matchUrlToRoute(path);
     if (matchedRoute) {
+      this.currentRoute = matchedRoute;
       matchedRoute.callback();
     }
     else {
@@ -36,4 +39,7 @@ export default class Router {
     this.loadRoute(path);
   }
 
+  getCurrentRoute(): Route {
+    return this.currentRoute;
+  }
 }

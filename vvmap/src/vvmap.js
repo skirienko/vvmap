@@ -13,11 +13,11 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 let T;
 
 const routes = [
-  { path: '/gender', callback: () => {T = new Gender() }},
-  { path: '/year', callback: () => { T = new Year() } },
-  { path: '/type', callback: () => { T = new Type() } },
+  { path: '/gender', description: 'улицы по гендеру', callback: () => {T = new Gender() }},
+  { path: '/year', description: 'улицы по годам', callback: () => { T = new Year() } },
+  { path: '/type', description: 'улицы по типам', callback: () => { T = new Type() } },
 ];
-new Router(routes);
+const router = new Router(routes);
 
 document.title = T.getTitle();
 
@@ -29,19 +29,26 @@ L.maplibreGL({
           maxZoom: 19
         }).addTo(map);
 
-const st = ({properties}) => {
+const styler = ({properties}) => {
   return {opacity:.75, color:T.getColor(properties[T.topic])}
 }
 
 fetch(T.getURL()).then(r => r.json()).then(gj => {
   L.geoJSON(gj, {
-    style: st,
+    style: styler,
     onEachFeature: createPopup,
   }).addTo(map);
 })
 
-const legend = L.control();
+const switcher = L.control();
+switcher.onAdd = function(_map) {
+  const select = L.DomUtil.create('select', 'switcher');
+  renderSwitcher(select);
+  return select;
+}
+switcher.addTo(map);
 
+const legend = L.control();
 legend.onAdd = function(_map) {
   const ul = L.DomUtil.create('ul', 'legend');
   renderLegend(ul);
@@ -49,13 +56,29 @@ legend.onAdd = function(_map) {
 }
 legend.addTo(map);
 
-function renderLegend(el) {
-  if (el) {
+
+function renderSwitcher(select) {
+  routes.forEach(r => {
+    const option = document.createElement('option');
+    option.setAttribute('value', r.path);
+    if (r === router.getCurrentRoute()) {
+      option.setAttribute('selected', true);
+    }
+    option.appendChild(document.createTextNode(r.description))
+    select.appendChild(option);
+  });
+  select.addEventListener('change', e => {
+    document.location = e.target.value;
+  });
+}
+
+function renderLegend(ul) {
+  if (ul) {
     Object.values(T.getLegend()).forEach(item => {
       const li = document.createElement('li');
       li.setAttribute('style', "color:"+item.color);
       li.appendChild(document.createTextNode(item.description));
-      el.appendChild(li);
+      ul.appendChild(li);
     });
   }
 }
