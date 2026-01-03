@@ -24,7 +24,7 @@ const TYPES: Record<string, LegendItem> = {
 
 export default class Gender extends Topic {
   topic = 'type';
-  title = "Карта Владивостока — распределение улиц по типам";
+  title = "Карта Владивостока — улицы по типам";
   legend = TYPES;
   getColor = this.getExactColor;
   getText = (p: TypeGJProperties) => p ? p.name : '';

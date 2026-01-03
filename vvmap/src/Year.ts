@@ -22,7 +22,7 @@ const YEARS: Record<string, LegendItem> = {
 
 export default class Year extends Topic {
   topic = 'year';
-  title = "Карта Владивостока — имена улиц по годам";
+  title = "Карта Владивостока — улицы по годам";
   legend = YEARS;
   getColor = this.getRangeColor;
   getText = ({name, year}: YearGJProperties) => `${name}: ${year}`;
