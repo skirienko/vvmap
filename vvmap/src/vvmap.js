@@ -64,9 +64,10 @@ function renderSwitcher(select) {
     if (r === router.getCurrentRoute()) {
       option.setAttribute('selected', true);
     }
-    option.appendChild(document.createTextNode(r.description))
+    option.appendChild(document.createTextNode(r.description));
     select.appendChild(option);
   });
+  select.setAttribute('id', 'topicSwitcher');
   select.addEventListener('change', e => {
     document.location = e.target.value;
   });
