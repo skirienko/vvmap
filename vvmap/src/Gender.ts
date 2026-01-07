@@ -8,9 +8,9 @@ type GenderGJProperties = {
 }
 
 const GENDERS: Record<string, LegendItem> = {
-  'f': {color:'#FF3333', description: 'улицы в честь женщин'},
-  'm': {color:'#3333FF', description: 'улицы в честь мужчин'},
-  '-': {color:'#99AA99', description: 'нейтральные улицы'},
+  'f': {color:'#FF3333', description: 'в честь женщин'},
+  'm': {color:'#3333FF', description: 'в честь мужчин'},
+  '-': {color:'#99AA99', description: 'нейтральные'},
   '!': {color:'#CC33CC', description: 'как бы нейтральные, но вообще-то в честь мужчин'},
   '?': {color:'#FFDD66', description: 'непонятно'},
 }
