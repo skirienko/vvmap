@@ -13,10 +13,6 @@ streets = {}
 ways = {}
 ways2 = {}
 
-genders = {}
-years = {}
-types = {}
-
 def parseXML():
     tree = ET.parse(filepath)
     root = tree.getroot()
@@ -59,14 +55,9 @@ def parseXML():
     
     print(f'{len(ways)} ways collected')
  
-    load_genders()
-    generate_geojson('gender', genders)
-
-    load_years()
-    generate_geojson('year', years)
-
-    load_types()
-    generate_geojson('type', types)
+    generate_geojson('gender', load_genders())
+    generate_geojson('year', load_years())
+    generate_geojson('type', load_types())
 
 
 def generate_geojson(topic, store):
@@ -134,34 +125,40 @@ def read_lines(filename):
 
 def load_genders():
     lines = read_lines('streets_genders.csv')
+    result = {}
     for line in lines:
         line = line.strip()
         row = line.split(',')
         key = row[0].lower()
         if (len(row) > 1):
-            genders[key] = row[1]
+            result[key] = row[1]
+    return result
 
 
 def load_years():
     lines = read_lines('streets_years.csv')
+    result = {}
     for line in lines:
         line = line.strip()
         row = line.split(',')
         key = row[0].lower()
         if (len(row) > 1):
             if row[1] != '-':
-                years[key] = row[1]
+                result[key] = row[1]
+    return result
 
 
 def load_types():
     lines = read_lines('streets_types.csv')
+    result = {}
     for line in lines:
         line = line.strip()
         row = line.split(',')
         key = row[0].lower()
         if (len(row) > 1):
             if row[1] != '-':
-                types[key] = row[1]
+                result[key] = row[1]
+    return result
 
 def main():
     print('Parsing...')
