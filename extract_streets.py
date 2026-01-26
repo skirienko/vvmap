@@ -64,11 +64,13 @@ def generate_geojson(topic, store):
     result = {}
     geojson = {}
     unknown = []
+    unused = []
 
     for name in ways:
         if name.lower() in store:
             result[name] = ways[name]
-            result[name][topic] = store[name.lower()]
+            result[name][topic] = store[name.lower()]['value']
+            store[name.lower()]['used'] += 1
         else:
             unknown.append(name)
 
@@ -95,6 +97,12 @@ def generate_geojson(topic, store):
     with open(f'unknown_streets_{topic}.txt', 'w') as ud:
         for name in unknown:
             ud.write(f'{name}\r\n')
+
+    with open(f'unused_streets_{topic}.txt', 'w') as uud:
+        for key in store.keys():
+            if store[key]['used'] == 0:
+                i = store[key]
+                uud.write(f'{i["name"]}: {i["used"]}\r\n')
 
 
 def get_nodes(nd):
@@ -131,7 +139,7 @@ def load_genders():
         row = line.split(',')
         key = row[0].lower()
         if (len(row) > 1):
-            result[key] = row[1]
+            result[key] = {'name': row[0], 'value': row[1], 'used': 0}
     return result
 
 
@@ -144,7 +152,7 @@ def load_years():
         key = row[0].lower()
         if (len(row) > 1):
             if row[1] != '-':
-                result[key] = row[1]
+                result[key] = {'name': row[0], 'value': row[1], 'used': 0}
     return result
 
 
@@ -157,7 +165,7 @@ def load_types():
         key = row[0].lower()
         if (len(row) > 1):
             if row[1] != '-':
-                result[key] = row[1]
+                result[key] = {'name': row[0], 'value': row[1], 'used': 0}
     return result
 
 def main():
