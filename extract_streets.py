@@ -68,9 +68,12 @@ def generate_geojson(topic, store):
 
     for name in ways:
         if name.lower() in store:
+            src = store[name.lower()]
             result[name] = ways[name]
-            result[name][topic] = store[name.lower()]['value']
-            store[name.lower()]['used'] += 1
+            result[name][topic] = src['value']
+            if 'descr' in src:
+                result[name]['descr'] = src['descr']
+            src['used'] += 1
         else:
             unknown.append(name)
 
@@ -82,6 +85,8 @@ def generate_geojson(topic, store):
         feat['properties'] = {}
         feat['properties']['name'] = name
         feat['properties'][topic] = result[name][topic]
+        if 'descr' in result[name]:
+            feat['properties']['descr'] = result[name]['descr']
         feat['geometry'] = {}
         if len(ways2[name]) == 1:
             feat['geometry']['type'] = 'LineString'
@@ -152,7 +157,10 @@ def load_years():
         key = row[0].lower()
         if (len(row) > 1):
             if row[1] != '-':
-                result[key] = {'name': row[0], 'value': row[1], 'used': 0}
+                feature = {'name': row[0], 'value': row[1], 'used': 0}
+                if len(row) > 2:
+                    feature['descr'] = row[2]
+                result[key] = feature
     return result
 
 
