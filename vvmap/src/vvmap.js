@@ -13,7 +13,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 let T;
 
 const routes = [
-  { path: '/gender', description: 'улицы по гендеру', callback: () => {T = new Gender() }},
+  { path: '/gender', description: 'улицы по полу', callback: () => {T = new Gender() }},
   { path: '/year', description: 'улицы по годам', callback: () => { T = new Year() } },
   { path: '/type', description: 'улицы по типам', callback: () => { T = new Type() } },
 ];

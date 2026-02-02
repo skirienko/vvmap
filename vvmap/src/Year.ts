@@ -4,6 +4,7 @@ import yearURL from './year.geojson?url';
 
 type YearGJProperties = {
   name: string,
+  descr: string,
   year: string,
 }
 
@@ -28,6 +29,6 @@ export default class Year extends Topic {
   title = "Карта Владивостока — улицы по годам";
   legend = YEARS;
   getColor = this.getRangeColor;
-  getText = ({name, year}: YearGJProperties) => `${name}: ${year}`;
+  getText = ({name, descr, year}: YearGJProperties) => `<b>${name}</b>: ${year}<br>${descr}`;
   getURL = () => yearURL;
 }
