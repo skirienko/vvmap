@@ -20,6 +20,7 @@ const TYPES: Record<string, LegendItem> = {
   'r': {color:'#FFDD66', description: 'кольца'},
   'd': {color:'#000099', description: 'проезды'},
   't': {color:'#990000', description: 'тупики'},
+  'v': {color:'#666666', description: 'посёлки'},
 }
 
 export default class Gender extends Topic {
