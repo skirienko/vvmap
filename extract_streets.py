@@ -13,7 +13,7 @@ streets = {}
 ways = {}
 ways2 = {}
 
-def parseXML():
+def parse_xml():
     tree = ET.parse(filepath)
     root = tree.getroot()
 
@@ -40,9 +40,9 @@ def parseXML():
     
     # for w in root.findall('./way/tag[@k="highway"]/..'):
     for w in root.findall('./way[tag]'):
-        if (w.find('./tag[@k="highway"]') is not None):
+        if w.find('./tag[@k="highway"]') is not None:
             n = w.find('./tag[@k="name"]')
-            if (n is not None):
+            if n is not None:
                 name = n.attrib['v']
                 if name not in ways:
                     print(name)
@@ -80,9 +80,7 @@ def generate_geojson(topic, store):
     geojson['type'] = 'FeatureCollection'
     geojson['features'] = []
     for name in result:
-        feat = {}
-        feat['type'] = 'Feature'
-        feat['properties'] = {}
+        feat = {'type': 'Feature', 'properties': {}}
         feat['properties']['name'] = name
         feat['properties'][topic] = result[name][topic]
         if 'descr' in result[name]:
@@ -143,7 +141,7 @@ def load_genders():
         line = line.strip()
         row = line.split(',')
         key = row[0].lower()
-        if (len(row) > 1):
+        if len(row) > 1:
             result[key] = {'name': row[0], 'value': row[1], 'used': 0}
     return result
 
@@ -153,9 +151,9 @@ def load_years():
     result = {}
     for line in lines:
         line = line.strip()
-        row = line.split(',')
+        row = line.split(';')
         key = row[0].lower()
-        if (len(row) > 1):
+        if len(row) > 1:
             if row[1] != '-':
                 feature = {'name': row[0], 'value': row[1], 'used': 0}
                 if len(row) > 2:
@@ -171,14 +169,14 @@ def load_types():
         line = line.strip()
         row = line.split(',')
         key = row[0].lower()
-        if (len(row) > 1):
+        if len(row) > 1:
             if row[1] != '-':
                 result[key] = {'name': row[0], 'value': row[1], 'used': 0}
     return result
 
 def main():
     print('Parsing...')
-    parseXML()
+    parse_xml()
 
 if __name__ == '__main__':
     main()
