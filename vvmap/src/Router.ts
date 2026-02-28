@@ -1,5 +1,6 @@
 export interface Route {
   path: string;
+  description: string;
   callback: () => void;
 }
 
@@ -19,8 +20,7 @@ export default class Router {
   }
 
   _matchUrlToRoute(path: string) {
-    const matchedRoute = this.routes.find(route => route.path === path);
-    return matchedRoute;
+    return this.routes.find(route => route.path === path);
   }
 
   loadRoute(path: string) {
