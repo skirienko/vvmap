@@ -11,15 +11,14 @@ import 'leaflet/dist/leaflet.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 let T;
+let overlay, legend;
 
 const routes = [
-  { path: '/gender', description: 'улицы по полу', callback: () => {T = new Gender() }},
-  { path: '/year', description: 'улицы по годам', callback: () => { T = new Year() } },
-  { path: '/type', description: 'улицы по типам', callback: () => { T = new Type() } },
+  { path: '/gender', description: 'улицы по полу', callback: initMap.bind(this, Gender) },
+  { path: '/year', description: 'улицы по годам', callback: initMap.bind(this, Year) },
+  { path: '/type', description: 'улицы по типам', callback: initMap.bind(this, Type) },
 ];
 const router = new Router(routes);
-
-document.title = T.getTitle();
 
 const map = L.map('map', {attributionControl:false}).setView([43.103, 131.905], 12);
 
@@ -33,12 +32,25 @@ const styler = ({properties}) => {
   return {opacity:.75, color:T.getColor(properties[T.topic])}
 }
 
-fetch(T.getURL()).then(r => r.json()).then(gj => {
-  L.geoJSON(gj, {
-    style: styler,
-    onEachFeature: createPopup,
-  }).addTo(map);
-})
+function initMap(type) {
+  T = new type();
+  document.title = T.getTitle();
+  if (overlay) {
+    overlay.remove();
+    legend.remove();
+    legend.addTo(map);
+  }
+  loadMap(T);
+}
+
+function loadMap(T) {
+  fetch(T.getURL()).then(r => r.json()).then(gj => {
+    overlay = L.geoJSON(gj, {
+      style: styler,
+      onEachFeature: createPopup,
+    }).addTo(map);
+  });
+}
 
 const switcher = L.control();
 switcher.onAdd = function(_map) {
@@ -48,7 +60,7 @@ switcher.onAdd = function(_map) {
 }
 switcher.addTo(map);
 
-const legend = L.control();
+legend = L.control();
 legend.onAdd = function(_map) {
   const ul = L.DomUtil.create('ul', 'legend');
   renderLegend(ul);
@@ -62,14 +74,14 @@ function renderSwitcher(select) {
     const option = document.createElement('option');
     option.setAttribute('value', r.path);
     if (r === router.getCurrentRoute()) {
-      option.setAttribute('selected', true);
+      option.setAttribute('selected', 'true');
     }
     option.appendChild(document.createTextNode(r.description));
     select.appendChild(option);
   });
   select.setAttribute('id', 'topicSwitcher');
   select.addEventListener('change', e => {
-    document.location = e.target.value;
+    router.navigateTo(e.target.value);
   });
 }
 
