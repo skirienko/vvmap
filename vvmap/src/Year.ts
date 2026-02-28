@@ -21,7 +21,7 @@ const YEARS: Record<string, LegendItem> = {
   '2001': {from: '2001', to: '2011', color: '#7627c0', description: '2001—2011'},
   '2012': {from: '2012', to: '2021', color: '#431ec6', description: '2012—2021'},
   '2022': {from: '2022', to: '2099', color: '#1212f3', description: '2022—н.в.'},
-   '?': {from: '0', to: '0', color: '#99AA99', description: 'неизвестный год'},
+   '?': {from: '0', to: '0', color: 'var(--street-neutral)', description: 'неизвестный год'},
 }
 
 export default class Year extends Topic {

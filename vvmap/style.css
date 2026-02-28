@@ -1,0 +1,49 @@
+:root {
+    --bg-color: #fff;
+
+    --street-default: #333333;
+    --street-red: #FF3333;
+    --street-blue: #3333FF;
+    --street-purple: #CC33CC;
+    --street-yellow: #FFDD66;
+    --street-neutral: #99AA99;
+}
+
+body { margin: 0; padding: 0; }
+html, body, #map { height: 100%; }
+ul.legend {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    background: var(--bg-color);
+    padding: 10px 15px 10px 25px;
+    border-radius: 5px;
+}
+ul.legend li {
+    list-style-type: square;
+}
+select.switcher {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
+@media screen and (min-width:919px) {
+    select.switcher {width: 15em}
+    ul.legend {width: 15em}
+}
+@media screen and (max-width:918px) {
+    ul.legend {max-width: 10em}
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #000;
+
+        --street-default: #808080;
+        --street-red: #cc2929;
+        --street-blue: #3d3dcc;
+        --street-purple: #992699;
+        --street-yellow: #b39736;
+        --street-neutral: #9aab9a;
+    }
+}

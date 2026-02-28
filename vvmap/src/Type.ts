@@ -9,15 +9,15 @@ type TypeGJProperties = {
 }
 
 const TYPES: Record<string, LegendItem> = {
-  's': {color:'#333333', description: 'улицы'},
-  'l': {color:'#669966', description: 'переулки'},
-  'p': {color:'#FF3333', description: 'проспекты'},
+  's': {color:'var(--street-default)', description: 'улицы'},
+  'l': {color:'var(--street-neutral)', description: 'переулки'},
+  'p': {color:'var(--street-red)', description: 'проспекты'},
   'c': {color:'#663300', description: 'шоссе'},
-  'e': {color:'#3366DD', description: 'набережные'},
+  'e': {color:'var(--street-blue)', description: 'набережные'},
   'b': {color:'#009933', description: 'бульвары'},
   'a': {color:'#33CC33', description: 'аллеи'},
-  'm': {color:'#CC33CC', description: 'мосты'},
-  'r': {color:'#FFDD66', description: 'кольца'},
+  'm': {color:'var(--street-purple)', description: 'мосты'},
+  'r': {color:'var(--street-yellow)', description: 'кольца'},
   'd': {color:'#000099', description: 'проезды'},
   't': {color:'#990000', description: 'тупики'},
   'v': {color:'#339999', description: 'посёлки'},

@@ -8,11 +8,11 @@ type GenderGJProperties = {
 }
 
 const GENDERS: Record<string, LegendItem> = {
-  'f': {color:'#FF3333', description: 'в честь женщин'},
-  'm': {color:'#3333FF', description: 'в честь мужчин'},
-  '-': {color:'#99AA99', description: 'нейтральные'},
-  '!': {color:'#CC33CC', description: 'как бы нейтральные, но вообще-то в честь мужчин'},
-  '?': {color:'#FFDD66', description: 'непонятно'},
+  'f': {color:'var(--street-red)', description: 'в честь женщин'},
+  'm': {color:'var(--street-blue)', description: 'в честь мужчин'},
+  '-': {color:'var(--street-neutral)', description: 'нейтральные'},
+  '!': {color:'var(--street-purple)', description: 'как бы нейтральные, но вообще-то в честь мужчин'},
+  '?': {color:'var(--street-yellow)', description: 'непонятно'},
 }
 
 export default class Gender extends Topic {
