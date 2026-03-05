@@ -1023,8 +1023,42 @@
         "text-font": ["Noto Sans Italic"],
         "text-letter-spacing": 0.2,
         "text-max-width": 5,
-        "text-size": ["interpolate", ["linear"], ["zoom"], 0, 10, 8, 14],
-        "visibility": "none"
+        "text-size": [
+          "interpolate",
+          ["exponential", 2],
+          ["zoom"],
+          3,
+          [
+            "match",
+            ["get", "class"],
+            "ocean",
+            16,
+            "sea",
+            12,
+            8
+          ],
+          12,
+          [
+            "match",
+            ["get", "class"],
+            "ocean",
+            28,
+            "sea",
+            21,
+            14
+          ],
+          20,
+          [
+            "match",
+            ["get", "class"],
+            "ocean",
+            80,
+            "sea",
+            60,
+            40
+          ]
+        ],
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#495e91",
@@ -1048,16 +1082,26 @@
         "symbol-placement": "line",
         "symbol-spacing": 350,
         "text-field": [
-          "case",
-          ["has", "name:ru"],
+          "coalesce",
           ["get", "name:ru"],
+          ["get", "name:mul"],
           ["get", "name"]
         ],
         "text-font": ["Noto Sans Italic"],
         "text-letter-spacing": 0.2,
         "text-max-width": 5,
-        "text-size": 14,
-        "visibility": "none"
+        "text-size": [
+          "interpolate",
+          ["exponential", 2],
+          ["zoom"],
+          3,
+          11,
+          12,
+          18,
+          20,
+          40
+        ],
+        "visibility": "visible"
       },
       "paint": {
         "text-color": "#495e91",
