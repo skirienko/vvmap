@@ -1,6 +1,7 @@
 import * as L from 'leaflet';
 import '@maplibre/maplibre-gl-leaflet';
 import mapstyleURL from './posi.json';
+import mapstyleDarkURL from './posi-dark.json';
 import Router from './Router';
 
 import Gender from './Gender';

@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #fff;
+    --bg-color: #F2F3F0;
 
     --street-default: #333333;
     --street-red: #FF3333;
@@ -17,7 +17,7 @@ ul.legend {
     right: 10px;
     background: var(--bg-color);
     padding: 10px 15px 10px 25px;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 ul.legend li {
     list-style-type: square;
@@ -35,9 +35,24 @@ select.switcher {
     ul.legend {max-width: 10em}
 }
 
+
+.map {
+    --map-background: rgb(242, 243, 240);
+    --map-park: rgb(230, 233, 229);
+    --map-water: rgb(194, 200, 202);
+    --map-landcover_ice_shelf: hsl(0,0%,98%,.7);
+    --map-landuse_residential: rgb(234, 234, 230);
+    --map-landcover_wood: rgb(220,224,220);
+    --map-waterway: hsl(195,17%,78%);
+    --map-building-fill: rgb(234, 234, 229);
+    --map-building-outline: rgb(219, 219, 218);
+    --map-label-city: #000;
+    --map-label-city-halo: #fff;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg-color: #000;
+        --bg-color: #121111;
 
         --street-default: #808080;
         --street-red: #cc2929;
@@ -45,5 +60,21 @@ select.switcher {
         --street-purple: #992699;
         --street-yellow: #b39736;
         --street-neutral: #9aab9a;
+    }
+    .map {
+        --map-background: #10110e;
+        --map-park: #181a17;
+        --map-water: #2e3334;
+        --map-landcover_ice_shelf: hsl(0,0%,98%,.7);
+        --map-landuse_residential: rgb(234, 234, 230);
+        --map-landcover_wood: rgb(220,224,220);
+        --map-waterway: hsl(195,17%,78%);
+        --map-building-fill: rgb(234, 234, 229);
+        --map-building-outline: rgb(219, 219, 218);
+        --map-label-city: #000;
+        --map-label-city-halo: #fff;
+
+
+        --sss: #495e91
     }
 }
