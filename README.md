@@ -14,3 +14,6 @@ ChatGPT suggested URL:
 ```bash
 curl -G https://overpass-api.de/api/interpreter --data-urlencode "data@vladivostok.overpassql" -o vladivostok.osm
 ```
+
+**MapTiler Cloud** allows you to upload a GeoJSON and get vector tiles out of it.
+See https://cloud.maptiler.com/tiles/019cd963-582d-7b02-8fbc-840bd9582951/ 
