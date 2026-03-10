@@ -13,6 +13,10 @@
     "openmaptiles": {
       "type": "vector",
       "url": "https://tiles.openfreemap.org/planet"
+    },
+    "vvmaps_years": {
+      "type": "vector",
+      "url": "https://api.maptiler.com/tiles/019cd963-582d-7b02-8fbc-840bd9582951/{z}/{x}/{y}.pbf?key=8PkDoydnJ0gdlxkT1JFP"
     }
   },
   "sprite": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm",
