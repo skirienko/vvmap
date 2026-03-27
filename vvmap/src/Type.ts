@@ -6,6 +6,7 @@ import typeURL from './type.geojson?url';
 type TypeGJProperties = {
   name: string,
   note?: string,
+  part: string,
 }
 
 const TYPES: Record<string, LegendItem> = {
@@ -28,6 +29,6 @@ export default class Gender extends Topic {
   title = "Карта Владивостока — улицы по типам";
   legend = TYPES;
   getColor = this.getExactColor;
-  getText = (p: TypeGJProperties) => p ? p.name : '';
+  getText = (p: TypeGJProperties) => p ? `<b>${p.name}</b><br>${p.part}` : '';
   getURL = () => typeURL;
 }

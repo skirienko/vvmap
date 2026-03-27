@@ -8,8 +8,13 @@ map_to_area->.vlad;
 (
   way(area.vlad)["highway"]["name"];
   way(area.vlad)["bridge"="yes"]["name"];
+  relation(id:7063164,
+    2247428,
+    7310557,
+    1933752,
+    3372537
+  );
 );
 out body;
 >;
 out skel qt;
-

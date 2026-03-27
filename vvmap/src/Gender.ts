@@ -5,6 +5,7 @@ import genderURL from './gender.geojson?url';
 
 type GenderGJProperties = {
   name: string,
+  part: string,
 }
 
 const GENDERS: Record<string, LegendItem> = {
@@ -20,6 +21,6 @@ export default class Gender extends Topic {
   title = "Карта Владивостока — улицы по гендерному признаку";
   legend = GENDERS;
   getColor = this.getExactColor;
-  getText = (p: GenderGJProperties) => p ? p.name : '';
+  getText = (p: GenderGJProperties) => p ? `<b>${p.name}</b><br>${p.part}` : '';
   getURL = () => genderURL;
 }
