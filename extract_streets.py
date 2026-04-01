@@ -153,7 +153,6 @@ def is_named_street(way):
         return False
     return (
         way.find('./tag[@k="highway"]') is not None
-        or way.find('./tag[@k="bridge"][@v="yes"]') is not None
     )
 
 
