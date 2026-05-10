@@ -25,11 +25,16 @@ const YEARS: Record<string, LegendItem> = {
    '?': {from: '0', to: '0', color: 'var(--street-neutral)', description: 'неизвестный год'},
 }
 
+const MAIN = 'mainland';
+const getTitle = (name: string, part: string): string => {
+  return part != MAIN ? `<b>${name}</b> (${part})` : `<b>${name}</b>`;
+};
+
 export default class Year extends Topic {
   topic = 'year';
   title = "Карта Владивостока — улицы по годам";
   legend = YEARS;
   getColor = this.getRangeColor;
-  getText = ({name, descr, part, year}: YearGJProperties) => `<b>${name}</b> (${part}): ${year}<br>${descr}`;
+  getText = ({name, descr, part, year}: YearGJProperties) => `${getTitle(name, part)}: ${year}<br>${descr}`;
   getURL = () => yearURL;
 }
