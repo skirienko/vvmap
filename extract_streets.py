@@ -70,7 +70,7 @@ def parse_xml():
 
 def generate_geojson(topic, store):
     result = {}
-    geojson = {}
+    geojson = {'type': 'FeatureCollection', 'features': []}
     unknown = []
 
     for key in ways:
@@ -96,8 +96,6 @@ def generate_geojson(topic, store):
         else:
             unknown.append(f'{name} [{way["part"]}]')
 
-    geojson['type'] = 'FeatureCollection'
-    geojson['features'] = []
     for key in result:
         name = result[key]['name']
         feat = {'type': 'Feature', 'properties': {}}

@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^6.4.1",
-    "typescript": "6.0.3"
+    "vite": "8.1.4",
+    "typescript": "7.0.2"
   },
   "dependencies": {
     "@maplibre/maplibre-gl-leaflet": "0.1.3",
