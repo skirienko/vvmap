@@ -4,8 +4,10 @@
     --street-default: #333333;
     --street-red: #FF3333;
     --street-blue: #3333FF;
+    --street-green: #33DD33;
     --street-purple: #CC33CC;
     --street-yellow: #FFDD66;
+    --street-peach: #FFDAB9;
     --street-neutral: #99AA99;
 }
 
@@ -57,8 +59,10 @@ select.switcher {
         --street-default: #808080;
         --street-red: #cc2929;
         --street-blue: #3d3dcc;
+        --street-green: #3dBB3d;
         --street-purple: #992699;
         --street-yellow: #b39736;
+        --street-peach: #a68769;
         --street-neutral: #9aab9a;
     }
     .map {

@@ -7,6 +7,7 @@ import Router from './Router';
 import Gender from './Gender';
 import Year from './Year';
 import Type from './Type';
+import Theme from "./Theme.ts";
 
 import 'leaflet/dist/leaflet.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -18,6 +19,7 @@ const routes = [
   { path: '/gender', description: 'улицы по полу', callback: initMap.bind(this, Gender) },
   { path: '/year', description: 'улицы по годам', callback: initMap.bind(this, Year) },
   { path: '/type', description: 'улицы по типам', callback: initMap.bind(this, Type) },
+  { path: '/theme', description: 'улицы по темам', callback: initMap.bind(this, Theme) },
 ];
 const router = new Router(routes);
 

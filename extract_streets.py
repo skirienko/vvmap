@@ -66,6 +66,7 @@ def parse_xml():
     generate_geojson('gender', load_genders())
     generate_geojson('year', load_years())
     generate_geojson('type', load_types())
+    generate_geojson('theme', load_themes())
 
 
 def generate_geojson(topic, store):
@@ -321,6 +322,20 @@ def load_types():
             if row[1] != '-':
                 result[key] = {'name': row[0], 'value': row[1], 'used': 0}
     return result
+
+
+def load_themes():
+    lines = read_lines('streets_themes.csv')
+    result = {}
+    for line in lines:
+        line = line.strip()
+        row = line.split(',')
+        key = row[0].lower()
+        if len(row) > 1:
+            if row[1] and row[1] != '-':
+                result[key] = {'name': row[0], 'value': row[1], 'used': 0}
+    return result
+
 
 def main():
     print('Parsing...')
