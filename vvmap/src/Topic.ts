@@ -12,6 +12,8 @@ export abstract class Topic {
     
   legend: Record<string, LegendItem> = {};
 
+  maplibreColorMatch?: any[];
+
   getTitle() {
     return this.title;
   }
@@ -29,4 +31,5 @@ export abstract class Topic {
     const item = Object.values(this.legend).find(isInRange) ?? this.legend['?'];
     return item.color;
   }
+
 }

@@ -2,11 +2,12 @@ import { Topic, LegendItem } from "./Topic";
 // @ts-ignore
 import typeURL from './theme.geojson?url';
 
-
 type ThemeGJProperties = {
     name: string,
     note?: string,
 }
+
+const topic = 'theme';
 // person, ship, tree, stone, place
 const THEMES: Record<string, LegendItem> = {
     'person': {color:'var(--street-default)', description: 'личность'},
@@ -18,11 +19,25 @@ const THEMES: Record<string, LegendItem> = {
     'stone': {color:'black', description: 'камень'},
 }
 
+const ML_THEME = [
+    'match',
+    ['get', topic],
+    'person', 'gray',
+    'ship', 'blue',
+    'place', 'yellow',
+    'tree', 'green',
+    'flower', 'purple',
+    'berry', 'red',
+    'stone', 'black',
+    'transparent'
+];
+
 export default class Theme extends Topic {
-    topic = 'theme';
+    topic = topic;
     title = "Карта Владивостока — улицы по темам";
     legend = THEMES;
     getColor = this.getExactColor;
+    maplibreColorMatch = ML_THEME;
     getText = (p: ThemeGJProperties) => p ? `${p.name}` : '';
     getURL = () => typeURL;
 }

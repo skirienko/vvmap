@@ -9,6 +9,8 @@ type YearGJProperties = {
   year: string,
 }
 
+const topic = 'year';
+
 const YEARS: Record<string, LegendItem> = {
   '1860': {from: '1860', to: '1907', color: '#1fc627', description: '1860—1907'},
   '1908': {from: '1908', to: '1921', color: '#0d7719', description: '1908—1921'},
@@ -25,16 +27,45 @@ const YEARS: Record<string, LegendItem> = {
    '?': {from: '0', to: '0', color: 'var(--street-neutral)', description: 'неизвестный год'},
 }
 
+const ML_YEAR: any = [
+  'step',
+  ['to-number', ['get', topic]],
+  '#1fc627',
+    1908,
+  '#0d7719',
+    1922,
+  '#ebcc04',
+    1924,
+  '#f90505',
+    1941,
+  '#d40b0b',
+    1953,
+  '#ba0b0b',
+    1961,
+  '#942b10',
+    1985,
+  '#6a361e',
+    1991,
+  '#cc1eaf',
+    2001,
+  '#7627c0',
+    2012,
+  '#431ec6',
+    2022,
+  '#1212f3'
+];
+
 const MAIN = 'mainland';
 const getTitle = (name: string, part: string): string => {
   return part != MAIN ? `<b>${name}</b> (${part})` : `<b>${name}</b>`;
 };
 
 export default class Year extends Topic {
-  topic = 'year';
+  topic = topic;
   title = "Карта Владивостока — улицы по годам";
   legend = YEARS;
   getColor = this.getRangeColor;
+  maplibreColorMatch = ML_YEAR;
   getText = ({name, descr, part, year}: YearGJProperties) => `${getTitle(name, part)}: ${year}<br>${descr}`;
   getURL = () => yearURL;
 }
