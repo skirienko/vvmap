@@ -1,7 +1,10 @@
 import mapstyleURL from './posi.json';
 import mapstyleDarkURL from './posi-dark.json';
 
-import {Map, Popup} from 'maplibre-gl';
+import {Map, Popup, setWorkerUrl} from 'maplibre-gl';
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+
+setWorkerUrl(workerUrl);
 
 import Router from './Router';
 

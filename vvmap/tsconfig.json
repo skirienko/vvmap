@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "isolatedModules": false,
+    "isolatedDeclarations": true,
+    "declaration": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "target": "es2022",
     "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "resolveJsonModule": true,"skipLibCheck": false,
+    "strict": false,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "moduleResolution": "Bundler",
-    "strict": true,
-    "types": ["vite/client"]
+    "types": ["geojson", "offscreencanvas"]
   },
   "include": ["src"]
 }
