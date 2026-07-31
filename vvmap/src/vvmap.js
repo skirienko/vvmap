@@ -1,7 +1,8 @@
-import * as L from 'leaflet';
-import '@maplibre/maplibre-gl-leaflet';
 import mapstyleURL from './posi.json';
 import mapstyleDarkURL from './posi-dark.json';
+
+import {Map, Popup} from 'maplibre-gl';
+
 import Router from './Router';
 
 import Gender from './Gender';
@@ -9,11 +10,20 @@ import Year from './Year';
 import Type from './Type';
 import Theme from "./Theme.ts";
 
-import 'leaflet/dist/leaflet.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 let T;
-let overlay, legend;
+let legend;
+
+const sources = {};
+const layerId = 'color-layer';
+
+const map = new Map({
+  container: 'map',
+  style: mapstyleURL,
+  center: [131.905, 43.103],
+  zoom: 12
+});
 
 const routes = [
   { path: '/gender', description: 'улицы по полу', callback: initMap.bind(this, Gender) },
@@ -21,56 +31,66 @@ const routes = [
   { path: '/type', description: 'улицы по типам', callback: initMap.bind(this, Type) },
   { path: '/theme', description: 'улицы по темам', callback: initMap.bind(this, Theme) },
 ];
-const router = new Router(routes);
+let router;
 
-const map = L.map('map', {attributionControl:false}).setView([43.103, 131.905], 12);
-
-L.maplibreGL({
-          // style: 'https://tiles.openfreemap.org/styles/positron'
-          style: mapstyleURL,
-          maxZoom: 19
-        }).addTo(map);
-
-const styler = ({properties}) => {
-  return {opacity:.75, color:T.getColor(properties[T.topic])}
-}
+map.once('load', () => {
+  // The router invokes the initial callback synchronously. Start it only
+  // after MapLibre can safely add sources and layers.
+  router = new Router(routes);
+  renderSwitcher(switcher);
+});
 
 function initMap(type) {
   T = new type();
   document.title = T.getTitle();
-  if (overlay) {
-    overlay.remove();
-    legend.remove();
-    legend.addTo(map);
-  }
-  loadMap(T);
+  renderLegend(legend);
+  loadLayer(T);
 }
 
-function loadMap(T) {
-  fetch(T.getURL()).then(r => r.json()).then(gj => {
-    overlay = L.geoJSON(gj, {
-      style: styler,
-      onEachFeature: createPopup,
-    }).addTo(map);
+map.on('click', layerId, (e) => {
+  new Popup().setLngLat(e.lngLat)
+      .setHTML(T.getText(e.features[0].properties))
+      .addTo(map);
+});
+
+map.on('mouseenter', layerId, (e) => {
+  map.getCanvas().style.cursor = 'pointer';
+});
+map.on('mouseleave', layerId, (e) => {
+  map.getCanvas().style.cursor = '';
+});
+
+function loadLayer(T) {
+  const srcId = `src-${T.topic}`;
+
+  if (!sources[srcId]) {
+    sources[srcId] = map.addSource(srcId, {
+      type: 'geojson',
+      data: T.getURL(),
+    });
+  }
+
+  if (map.getLayer(layerId)) {
+    map.removeLayer(layerId);
+  }
+  map.addLayer({
+    id: layerId,
+    source: srcId,
+    type: 'line',
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round'
+    },
+    paint: {
+      'line-width': 4,
+      'line-opacity': .5,
+      'line-color': T.maplibreColorMatch,
+    }
   });
 }
 
-const switcher = L.control();
-switcher.onAdd = function(_map) {
-  const select = L.DomUtil.create('select', 'switcher');
-  renderSwitcher(select);
-  return select;
-}
-switcher.addTo(map);
-
-legend = L.control();
-legend.onAdd = function(_map) {
-  const ul = L.DomUtil.create('ul', 'legend');
-  renderLegend(ul);
-  return ul;
-}
-legend.addTo(map);
-
+const switcher = document.querySelector('.switcher');
+legend = document.querySelector('.legend');
 
 function renderSwitcher(select) {
   routes.forEach(r => {
@@ -89,7 +109,8 @@ function renderSwitcher(select) {
 }
 
 function renderLegend(ul) {
-  if (ul) {
+  if (ul && T) {
+    legend.replaceChildren();
     Object.values(T.getLegend()).forEach(item => {
       const li = document.createElement('li');
       li.setAttribute('style', "color:"+item.color);
@@ -97,8 +118,4 @@ function renderLegend(ul) {
       ul.appendChild(li);
     });
   }
-}
-
-function createPopup(feature, layer) {
-  layer.bindPopup(T.getText(feature.properties))
 }
