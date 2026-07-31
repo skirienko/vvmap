@@ -17,10 +17,12 @@ ul.legend {
     position: fixed;
     top: 50px;
     right: 10px;
+    font: 12pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
     background: var(--bg-color);
     padding: 10px 15px 10px 25px;
     border-radius: 7px;
 }
+ul.legend:empty { display: none; }
 ul.legend li {
     list-style-type: square;
 }
@@ -77,7 +79,6 @@ select.switcher {
         --map-building-outline: rgb(219, 219, 218);
         --map-label-city: #000;
         --map-label-city-halo: #fff;
-
 
         --sss: #495e91
     }

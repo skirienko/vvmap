@@ -1,6 +1,6 @@
 import { Topic, LegendItem } from "./Topic";
 // @ts-ignore
-import typeURL from './theme.geojson?url';
+import themeURL from './theme.geojson?url';
 
 type ThemeGJProperties = {
     name: string,
@@ -39,5 +39,5 @@ export default class Theme extends Topic {
     getColor = this.getExactColor;
     maplibreColorMatch = ML_THEME;
     getText = (p: ThemeGJProperties) => p ? `${p.name}` : '';
-    getURL = () => typeURL;
+    getURL = () => themeURL;
 }
