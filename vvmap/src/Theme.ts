@@ -4,7 +4,7 @@ import themeURL from './theme.geojson?url';
 
 type ThemeGJProps = {
     name: string,
-    note?: string,
+    descr?: string,
 }
 
 const topic = 'theme';
@@ -12,7 +12,7 @@ const topic = 'theme';
 const THEMES: Legend = {
     'person': {color:'var(--street-default)', description: 'личность'},
     'ship': {color:'var(--street-blue)', description: 'судно'},
-    'place': {color:'var(--street-yellow)', description: 'место'},
+    'place': {color:'brown', description: 'место'},
     'tree': {color:'var(--street-green)', description: 'дерево'},
     'flower': {color:'var(--street-purple)', description: 'цветок'},
     'berry': {color:'var(--street-red)', description: 'ягода'},
@@ -38,6 +38,6 @@ export default class Theme extends Topic {
     legend: Legend = THEMES;
     getColor: ColorGetter = this.getExactColor;
     maplibreColorMatch = ML_THEME;
-    getText: (p: ThemeGJProps) => string = (p: ThemeGJProps) => p ? `${p.name}` : '';
+    getText: (p: ThemeGJProps) => string = ({name, descr}: ThemeGJProps) => `<b>${name}</b><br>${descr}`;
     getURL = () => themeURL;
 }

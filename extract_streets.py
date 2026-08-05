@@ -333,7 +333,11 @@ def load_themes():
         key = row[0].lower()
         if len(row) > 1:
             if row[1] and row[1] != '-':
-                result[key] = {'name': row[0], 'value': row[1], 'used': 0}
+                feature = {'name': row[0], 'value': row[1], 'used': 0}
+                if len(row) > 2:
+                    feature['descr'] = row[2]
+                result[key] = feature
+
     return result
 
 

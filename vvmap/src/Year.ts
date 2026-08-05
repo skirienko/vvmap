@@ -1,4 +1,4 @@
-import { Topic, LegendItem } from "./Topic";
+import {Topic, Legend, ColorGetter} from "./Topic";
 // @ts-ignore
 import yearURL from './year.geojson?url';
 
@@ -11,7 +11,7 @@ type YearGJProperties = {
 
 const topic = 'year';
 
-const YEARS: Record<string, LegendItem> = {
+const YEARS: Legend = {
   '1860': {from: '1860', to: '1907', color: '#1fc627', description: '1860—1907'},
   '1908': {from: '1908', to: '1921', color: '#0d7719', description: '1908—1921'},
   '1918': {from: '1918', to: '1923', color: '#ebcc04', description: '1918—1923'},
@@ -61,10 +61,10 @@ const getTitle = (name: string, part: string): string => {
 };
 
 export default class Year extends Topic {
-  topic = topic;
-  title = "Карта Владивостока — улицы по годам";
-  legend = YEARS;
-  getColor = this.getRangeColor;
+  topic: string = topic;
+  title: string = "Карта Владивостока — улицы по годам";
+  legend: Legend = YEARS;
+  getColor: ColorGetter = this.getRangeColor;
   maplibreColorMatch = ML_YEAR;
   getText = ({name, descr, part, year}: YearGJProperties) => `${getTitle(name, part)}: ${year}<br>${descr}`;
   getURL = () => yearURL;
