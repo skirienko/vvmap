@@ -1,8 +1,8 @@
-import { Topic, LegendItem } from "./Topic";
+import {Topic, ColorGetter, Legend} from "./Topic";
 // @ts-ignore
 import typeURL from './type.geojson?url';
 
-type TypeGJProperties = {
+type TypeGJProps = {
   name: string,
   note?: string,
   part: string,
@@ -10,7 +10,7 @@ type TypeGJProperties = {
 
 const topic = 'type';
 
-const TYPES: Record<string, LegendItem> = {
+const TYPES: Legend = {
   's': {color:'var(--street-default)', description: 'улицы'},
   'l': {color:'var(--street-neutral)', description: 'переулки'},
   'p': {color:'var(--street-red)', description: 'проспекты'},
@@ -44,11 +44,11 @@ const ML_TYPE = [
 ];
 
 export default class Gender extends Topic {
-  topic = topic;
-  title = "Карта Владивостока — улицы по типам";
-  legend = TYPES;
-  getColor = this.getExactColor;
+  topic: string = topic;
+  title: string = "Карта Владивостока — улицы по типам";
+  legend: Legend = TYPES;
+  getColor: ColorGetter = this.getExactColor;
   maplibreColorMatch = ML_TYPE;
-  getText = (p: TypeGJProperties) => p ? `<b>${p.name}</b><br>${p.part}` : '';
+  getText = (p: TypeGJProps) => p ? `<b>${p.name}</b><br>${p.part}` : '';
   getURL = () => typeURL;
 }

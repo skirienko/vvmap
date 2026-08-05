@@ -17,7 +17,7 @@ ul.legend {
     position: fixed;
     top: 50px;
     right: 10px;
-    font: 12pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font: 10pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
     background: var(--bg-color);
     padding: 10px 15px 10px 25px;
     border-radius: 7px;
@@ -36,7 +36,7 @@ select.switcher {
     ul.legend {width: 15em}
 }
 @media screen and (max-width:918px) {
-    ul.legend {max-width: 10em}
+    ul.legend {max-width: 10em; font-size:9pt}
 }
 
 

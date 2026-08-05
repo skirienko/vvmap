@@ -59,6 +59,7 @@ map.on('click', layerId, (e) => {
 map.on('mouseenter', layerId, (e) => {
   map.getCanvas().style.cursor = 'pointer';
 });
+
 map.on('mouseleave', layerId, (e) => {
   map.getCanvas().style.cursor = '';
 });
@@ -85,11 +86,19 @@ function loadLayer(T) {
       'line-cap': 'round'
     },
     paint: {
-      'line-width': 4,
-      'line-opacity': .5,
+      'line-width': [
+        "interpolate",
+        ["exponential", 1.5],
+        ["zoom"],
+        15,
+        3,
+        17,
+        10
+      ],
+      'line-layer-opacity': .5,
       'line-color': T.maplibreColorMatch,
     }
-  });
+  }, 'highway-name-path');
 }
 
 const switcher = document.querySelector('.switcher');

@@ -5,28 +5,31 @@ export type LegendItem = {
   to?: string;
 }
 
+export type Legend = Record<string, LegendItem>;
+
+export type ColorGetter = (key: string) => string;
 
 export abstract class Topic {
 
   title: string = "Карта Владивостока";
     
-  legend: Record<string, LegendItem> = {};
+  legend: Legend = {};
 
   maplibreColorMatch?: any[];
 
-  getTitle() {
+  getTitle(): string {
     return this.title;
   }
   
-  getLegend() {
+  getLegend(): Legend {
     return this.legend;
   }
 
-  getExactColor(key: string) {
+  getExactColor(key: string): string {
     return key in this.legend ? this.legend[key].color : this.legend['?'].color;
   }
 
-  getRangeColor(value: string) {
+  getRangeColor(value: string): string {
     const isInRange = (i:LegendItem) =>  i.from && i.to && value >= i.from && value <= i.to;
     const item = Object.values(this.legend).find(isInRange) ?? this.legend['?'];
     return item.color;
