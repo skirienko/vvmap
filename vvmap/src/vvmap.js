@@ -1,6 +1,8 @@
 import mapstyleURL from './posi.json';
 import mapstyleDarkURL from './posi-dark.json';
 
+import capesURL from './capes.geojson?url';
+
 import {Map, Popup, setWorkerUrl} from 'maplibre-gl';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 
@@ -40,6 +42,7 @@ map.once('load', () => {
   // The router invokes the initial callback synchronously. Start it only
   // after MapLibre can safely add sources and layers.
   router = new Router(routes);
+  loadCapes();
   renderSwitcher(switcher);
 });
 
@@ -63,6 +66,33 @@ map.on('mouseenter', layerId, (e) => {
 map.on('mouseleave', layerId, (e) => {
   map.getCanvas().style.cursor = '';
 });
+
+function loadCapes() {
+  const srcId = 'src-capes'
+  sources[srcId] = map.addSource(srcId, {
+    type: 'geojson',
+    data: capesURL,
+  });
+  map.addLayer({
+    id: 'cape_name_label',
+    type: 'circle',
+    source: srcId,
+    minzoom: 10,
+    layout: {
+      "symbol-placement": "line",
+      "text-field": [
+        "case",
+        ["has", "name:ru"],
+        ["get", "name:ru"],
+        ["get", "name"]
+      ],
+      "text-font": ["Noto Sans Regular"],
+    },
+    paint: {
+      "text-color": "#009933",
+    }
+  });
+}
 
 function loadLayer(T) {
   const srcId = `src-${T.topic}`;
