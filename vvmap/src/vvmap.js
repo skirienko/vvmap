@@ -1,5 +1,5 @@
-import mapstyleURL from './posi.json';
-import mapstyleDarkURL from './posi-dark.json';
+import mapstyleLightURL from './posi.json';
+import mapstyleDarkURL from './fiord.json';
 
 import capesURL from './capes.geojson?url';
 
@@ -23,9 +23,15 @@ let legend;
 const sources = {};
 const layerId = 'color-layer';
 
+const darkModeMql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+let mapstyle = mapstyleLightURL;
+if (darkModeMql && darkModeMql.matches) {
+  mapstyle = mapstyleDarkURL;
+}
+
 const map = new Map({
   container: 'map',
-  style: mapstyleURL,
+  style: mapstyle,
   center: [131.905, 43.103],
   zoom: 12
 });
