@@ -10,10 +10,6 @@
       ],
       "type": "raster"
     },
-    "vvmaps_years": {
-      "type": "vector",
-      "url": "https://api.maptiler.com/tiles/019cd963-582d-7b02-8fbc-840bd9582951/{z}/{x}/{y}.pbf?key=8PkDoydnJ0gdlxkT1JFP"
-    },
     "openmaptiles": {
       "type": "vector",
       "url": "https://tiles.openfreemap.org/planet"
@@ -1646,6 +1642,7 @@
         ["==", ["get", "rank"], 1]
       ],
       "layout": {
+        "text-anchor": "center",
         "text-field": [
           "case",
           ["has", "name:nonlatin"],
