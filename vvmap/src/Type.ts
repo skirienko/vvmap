@@ -1,6 +1,7 @@
 import {Topic, ColorGetter, Legend} from "./Topic";
 // @ts-ignore
 import typeURL from './type.geojson?url';
+import {ColorSpecification, DataDrivenPropertyValueSpecification} from "@maplibre/maplibre-gl-style-spec";
 
 type TypeGJProps = {
   name: string,
@@ -25,7 +26,7 @@ const TYPES: Legend = {
   'v': {color:'#339999', description: 'посёлки'},
 }
 
-const ML_TYPE = [
+const ML_TYPE: DataDrivenPropertyValueSpecification<ColorSpecification> = [
   'match',
   ['get', topic],
   's', '#808080',
@@ -45,10 +46,10 @@ const ML_TYPE = [
 
 export default class Gender extends Topic {
   topic: string = topic;
+  geojsonURL: string = typeURL;
   title: string = "Карта Владивостока — улицы по типам";
   legend: Legend = TYPES;
   getColor: ColorGetter = this.getExactColor;
-  maplibreColorMatch = ML_TYPE;
-  getText = (p: TypeGJProps) => p ? `<b>${p.name}</b><br>${p.part}` : '';
-  getURL = () => typeURL;
+  maplibreColorMatch: DataDrivenPropertyValueSpecification<ColorSpecification> = ML_TYPE;
+  getText: (p: TypeGJProps) => string = (p: TypeGJProps) => p ? `<b>${p.name}</b><br>${p.part}` : '';
 }

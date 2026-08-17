@@ -75,7 +75,7 @@ function loadCapes() {
   });
   map.addLayer({
     id: 'cape_name_label',
-    type: 'circle',
+    type: 'symbol',
     source: srcId,
     minzoom: 10,
     layout: {
@@ -100,7 +100,7 @@ function loadLayer(T) {
   if (!sources[srcId]) {
     sources[srcId] = map.addSource(srcId, {
       type: 'geojson',
-      data: T.getURL(),
+      data: T.geojsonURL,
     });
   }
 

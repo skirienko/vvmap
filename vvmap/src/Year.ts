@@ -1,6 +1,7 @@
 import {Topic, Legend, ColorGetter} from "./Topic";
 // @ts-ignore
 import yearURL from './year.geojson?url';
+import {ColorSpecification, DataDrivenPropertyValueSpecification} from "@maplibre/maplibre-gl-style-spec";
 
 type YearGJProperties = {
   name: string,
@@ -27,7 +28,7 @@ const YEARS: Legend = {
    '?': {from: '0', to: '0', color: 'var(--street-neutral)', description: 'неизвестный год'},
 }
 
-const ML_YEAR: any = [
+const ML_YEAR: DataDrivenPropertyValueSpecification<ColorSpecification> = [
   'step',
   ['to-number', ['get', topic]],
   '#1fc627',
@@ -62,10 +63,10 @@ const getTitle = (name: string, part: string): string => {
 
 export default class Year extends Topic {
   topic: string = topic;
+  geojsonURL: string = yearURL;
   title: string = "Карта Владивостока — улицы по годам";
   legend: Legend = YEARS;
   getColor: ColorGetter = this.getRangeColor;
-  maplibreColorMatch = ML_YEAR;
+  maplibreColorMatch: DataDrivenPropertyValueSpecification<ColorSpecification> = ML_YEAR;
   getText = ({name, descr, part, year}: YearGJProperties) => `${getTitle(name, part)}: ${year}<br>${descr}`;
-  getURL = () => yearURL;
 }

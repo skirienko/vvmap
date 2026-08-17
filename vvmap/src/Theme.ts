@@ -1,6 +1,7 @@
 import {Topic, Legend, ColorGetter} from "./Topic";
 // @ts-ignore
 import themeURL from './theme.geojson?url';
+import {ColorSpecification, DataDrivenPropertyValueSpecification} from "@maplibre/maplibre-gl-style-spec";
 
 type ThemeGJProps = {
     name: string,
@@ -19,7 +20,7 @@ const THEMES: Legend = {
     'stone': {color:'black', description: 'камень'},
 }
 
-const ML_THEME = [
+const ML_THEME: DataDrivenPropertyValueSpecification<ColorSpecification> = [
     'match',
     ['get', topic],
     'person', 'gray',
@@ -34,10 +35,10 @@ const ML_THEME = [
 
 export default class Theme extends Topic {
     topic: string = topic;
+    geojsonURL: string = themeURL;
     title: string = "Карта Владивостока — улицы по темам";
     legend: Legend = THEMES;
     getColor: ColorGetter = this.getExactColor;
-    maplibreColorMatch = ML_THEME;
+    maplibreColorMatch: DataDrivenPropertyValueSpecification<ColorSpecification> = ML_THEME;
     getText: (p: ThemeGJProps) => string = ({name, descr}: ThemeGJProps) => `<b>${name}</b><br>${descr}`;
-    getURL = () => themeURL;
 }

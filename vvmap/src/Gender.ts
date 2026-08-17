@@ -1,6 +1,7 @@
 import {Topic, Legend, ColorGetter} from "./Topic";
 // @ts-ignore
 import genderURL from './gender.geojson?url';
+import {ColorSpecification, DataDrivenPropertyValueSpecification} from "@maplibre/maplibre-gl-style-spec";
 
 
 type GenderGJProperties = {
@@ -18,7 +19,7 @@ const GENDERS: Legend = {
   '?': {color:'var(--street-yellow)', description: 'непонятно'},
 }
 
-const ML_GENDER = [
+const ML_GENDER: DataDrivenPropertyValueSpecification<ColorSpecification> = [
   'match',
   ['get', topic],
   'f', 'red',
@@ -31,10 +32,10 @@ const ML_GENDER = [
 
 export default class Gender extends Topic {
   topic: string = topic;
+  geojsonURL: string = genderURL;
   title: string = "Карта Владивостока — улицы по гендерному признаку";
   legend: Legend = GENDERS;
   getColor: ColorGetter = this.getExactColor;
-  maplibreColorMatch = ML_GENDER;
-  getText = (p: GenderGJProperties) => p ? `<b>${p.name}</b><br>${p.part}` : '';
-  getURL = () => genderURL;
+  maplibreColorMatch: DataDrivenPropertyValueSpecification<ColorSpecification> = ML_GENDER;
+  getText: (p: GenderGJProperties) => string = (p: GenderGJProperties) => p ? `<b>${p.name}</b><br>${p.part}` : '';
 }

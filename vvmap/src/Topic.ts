@@ -1,3 +1,5 @@
+import {ColorSpecification, DataDrivenPropertyValueSpecification} from "@maplibre/maplibre-gl-style-spec";
+
 export type LegendItem = {
   color: string;
   description: string;
@@ -11,11 +13,13 @@ export type ColorGetter = (key: string) => string;
 
 export abstract class Topic {
 
+  geojsonURL: string;
+
   title: string = "Карта Владивостока";
     
   legend: Legend = {};
 
-  maplibreColorMatch?: any[];
+  maplibreColorMatch: DataDrivenPropertyValueSpecification<ColorSpecification>;
 
   getTitle(): string {
     return this.title;
