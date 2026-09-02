@@ -1,7 +1,8 @@
-import {Topic, Legend, ColorGetter} from "./Topic";
+import { Topic, Legend } from "./Topic";
 // @ts-ignore
 import themeURL from './theme.geojson?url';
-import {ColorSpecification, DataDrivenPropertyValueSpecification} from "@maplibre/maplibre-gl-style-spec";
+import { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
+import { SCHEME } from "./colors";
 
 type ThemeGJProps = {
     name: string,
@@ -10,35 +11,21 @@ type ThemeGJProps = {
 
 const topic = 'theme';
 // person, ship, tree, stone, place
-const THEMES: Legend = {
-    'person': {color:'var(--street-default)', description: 'личность'},
-    'ship': {color:'var(--street-blue)', description: 'судно'},
-    'place': {color:'brown', description: 'место'},
-    'tree': {color:'var(--street-green)', description: 'дерево'},
-    'flower': {color:'var(--street-purple)', description: 'цветок'},
-    'berry': {color:'var(--street-red)', description: 'ягода'},
+const legend: Legend = {
+    'person': {color: SCHEME.default, description: 'личность'},
+    'ship': {color: SCHEME.blue, description: 'судно'},
+    'place': {color: SCHEME.peach, description: 'место'},
+    'tree': {color: SCHEME.green, description: 'дерево'},
+    'flower': {color: SCHEME.purple, description: 'цветок'},
+    'berry': {color: SCHEME.red, description: 'ягода'},
     'stone': {color:'black', description: 'камень'},
 }
-
-const ML_THEME: DataDrivenPropertyValueSpecification<ColorSpecification> = [
-    'match',
-    ['get', topic],
-    'person', 'gray',
-    'ship', 'blue',
-    'place', 'brown',
-    'tree', 'green',
-    'flower', 'purple',
-    'berry', 'red',
-    'stone', 'black',
-    'transparent'
-];
 
 export default class Theme extends Topic {
     topic: string = topic;
     geojsonURL: string = themeURL;
     title: string = "Карта Владивостока — улицы по темам";
-    legend: Legend = THEMES;
-    getColor: ColorGetter = this.getExactColor;
-    maplibreColorMatch: DataDrivenPropertyValueSpecification<ColorSpecification> = ML_THEME;
+    legend: Legend = legend;
+    maplibreColorMatch: ExpressionSpecification = this.mlColorMatch(topic);
     getText: (p: ThemeGJProps) => string = ({name, descr}: ThemeGJProps) => `<b>${name}</b><br>${descr}`;
 }

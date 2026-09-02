@@ -1,4 +1,4 @@
-import {ColorSpecification, DataDrivenPropertyValueSpecification} from "@maplibre/maplibre-gl-style-spec";
+import { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
 
 export type LegendItem = {
   color: string;
@@ -19,7 +19,7 @@ export abstract class Topic {
     
   legend: Legend = {};
 
-  maplibreColorMatch: DataDrivenPropertyValueSpecification<ColorSpecification>;
+  maplibreColorMatch: ExpressionSpecification;
 
   getTitle(): string {
     return this.title;
@@ -37,6 +37,13 @@ export abstract class Topic {
     const isInRange = (i:LegendItem) =>  i.from && i.to && value >= i.from && value <= i.to;
     const item = Object.values(this.legend).find(isInRange) ?? this.legend['?'];
     return item.color;
+  }
+
+  mlColorMatch: (field: string) => ExpressionSpecification = (field: string) => {
+    const match: ExpressionSpecification = ['match', ['get', field], '', '', 'transparent']
+    const pairs: string[] = Object.entries(this.legend).flatMap(([key, {color}]) => [key, color]);
+    match.splice(2, 2, ...pairs);
+    return match;
   }
 
 }

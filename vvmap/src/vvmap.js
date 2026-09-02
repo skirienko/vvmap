@@ -8,6 +8,9 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 
 setWorkerUrl(workerUrl);
 
+import { isDark } from './colors.ts';
+console.log(isDark);
+
 import Router from './Router';
 
 import Gender from './Gender';
@@ -23,11 +26,7 @@ let legend;
 const sources = {};
 const layerId = 'color-layer';
 
-const darkModeMql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
-let mapstyle = mapstyleLightURL;
-if (darkModeMql && darkModeMql.matches) {
-  mapstyle = mapstyleDarkURL;
-}
+const mapstyle = isDark ? mapstyleDarkURL : mapstyleLightURL;
 
 const map = new Map({
   container: 'map',

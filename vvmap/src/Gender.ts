@@ -1,7 +1,8 @@
-import {Topic, Legend, ColorGetter} from "./Topic";
+import { Topic, Legend } from "./Topic";
 // @ts-ignore
 import genderURL from './gender.geojson?url';
-import {ColorSpecification, DataDrivenPropertyValueSpecification} from "@maplibre/maplibre-gl-style-spec";
+import { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
+import { SCHEME } from './colors';
 
 
 type GenderGJProperties = {
@@ -11,31 +12,19 @@ type GenderGJProperties = {
 
 const topic = 'gender';
 
-const GENDERS: Legend = {
-  'f': {color:'var(--street-red)', description: 'в честь женщин'},
-  'm': {color:'var(--street-blue)', description: 'в честь мужчин'},
-  '-': {color:'var(--street-neutral)', description: 'нейтральные'},
-  '!': {color:'var(--street-purple)', description: 'как бы нейтральные, но вообще-то в честь мужчин'},
-  '?': {color:'var(--street-yellow)', description: 'непонятно'},
+const legend: Legend = {
+  'f': {color: SCHEME.red, description: 'в честь женщин'},
+  'm': {color: SCHEME.blue, description: 'в честь мужчин'},
+  '-': {color: SCHEME.neutral, description: 'нейтральные'},
+  '!': {color: SCHEME.purple, description: 'как бы нейтральные, но вообще-то в честь мужчин'},
+  '?': {color: SCHEME.yellow, description: 'непонятно'},
 }
-
-const ML_GENDER: DataDrivenPropertyValueSpecification<ColorSpecification> = [
-  'match',
-  ['get', topic],
-  'f', 'red',
-  'm', 'blue',
-  '-', 'gray',
-  '!', 'purple',
-  '?', 'yellow',
-  'transparent'
-];
 
 export default class Gender extends Topic {
   topic: string = topic;
   geojsonURL: string = genderURL;
   title: string = "Карта Владивостока — улицы по гендерному признаку";
-  legend: Legend = GENDERS;
-  getColor: ColorGetter = this.getExactColor;
-  maplibreColorMatch: DataDrivenPropertyValueSpecification<ColorSpecification> = ML_GENDER;
+  legend: Legend = legend;
+  maplibreColorMatch: ExpressionSpecification = this.mlColorMatch(topic);
   getText: (p: GenderGJProperties) => string = (p: GenderGJProperties) => p ? `<b>${p.name}</b><br>${p.part}` : '';
 }
