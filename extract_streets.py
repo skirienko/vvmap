@@ -329,7 +329,7 @@ def load_themes():
     result = {}
     for line in lines:
         line = line.strip()
-        row = line.split(',')
+        row = line.split(';')
         key = row[0].lower()
         if len(row) > 1:
             if row[1] and row[1] != '-':

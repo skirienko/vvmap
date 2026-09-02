@@ -12,18 +12,18 @@ const LIGHT: ColorScheme = {
     green: '#33DD33',
     purple: '#CC33CC',
     yellow: '#FFDD66',
-    peach: '#FFDAB9',
+    peach: '#cc9c72',
     neutral: '#99AA99',
 };
 const DARK: ColorScheme = {
     default: '#808080',
-    red: '#cc2929',
+    red: '#a82222',
     blue: '#3d3dcc',
-    green: '#3dBB3d',
-    purple: '#992699',
-    yellow: '#b39736',
-    peach: '#a68769',
-    neutral: '#9aab9a',
+    green: '#2a802a',
+    purple: '#802080',
+    yellow: '#a88f32',
+    peach: '#805e40',
+    neutral: '#738073',
 };
 
 const SCHEME: ColorScheme = isDark ? DARK : LIGHT;
