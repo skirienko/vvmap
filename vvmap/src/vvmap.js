@@ -8,7 +8,7 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 
 setWorkerUrl(workerUrl);
 
-import { isDark } from './colors.ts';
+import { isDark, subscribeToDarkModeChange } from './colors.ts';
 console.log(isDark);
 
 import Router from './Router';
@@ -23,14 +23,20 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 let T;
 let legend;
 
-const sources = {};
 const layerId = 'color-layer';
 
-const mapstyle = isDark ? mapstyleDarkURL : mapstyleLightURL;
+const getMapStyle = (isDark) => isDark ? mapstyleDarkURL : mapstyleLightURL;
+
+subscribeToDarkModeChange((isDark) => {
+  if (map) {
+    map.setStyle(getMapStyle(isDark));
+    initMap(T.constructor);
+  }
+})
 
 const map = new Map({
   container: 'map',
-  style: mapstyle,
+  style: getMapStyle(isDark),
   center: [131.905, 43.103],
   zoom: 12
 });
@@ -74,7 +80,7 @@ map.on('mouseleave', layerId, (e) => {
 
 function loadCapes() {
   const srcId = 'src-capes'
-  sources[srcId] = map.addSource(srcId, {
+  map.addSource(srcId, {
     type: 'geojson',
     data: capesURL,
   });
@@ -102,8 +108,8 @@ function loadCapes() {
 function loadLayer(T) {
   const srcId = `src-${T.topic}`;
 
-  if (!sources[srcId]) {
-    sources[srcId] = map.addSource(srcId, {
+  if (!map.getSource(srcId)) {
+    map.addSource(srcId, {
       type: 'geojson',
       data: T.geojsonURL,
     });

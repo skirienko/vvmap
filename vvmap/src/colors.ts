@@ -2,6 +2,12 @@ const darkModeMql = window.matchMedia && window.matchMedia('(prefers-color-schem
 
 const isDark: boolean = darkModeMql && darkModeMql.matches;
 
+const subscribeToDarkModeChange: (listener: (isDark: boolean) => any) => void = (listener) => {
+    if (darkModeMql) {
+        darkModeMql.addEventListener('change', e => listener(e.matches));
+    }
+}
+
 type ColorName = 'default' | 'red' | 'blue' | 'green' | 'purple' | 'yellow' | 'peach' | 'neutral';
 type ColorScheme = Record<ColorName, string>;
 
@@ -28,4 +34,4 @@ const DARK: ColorScheme = {
 
 const SCHEME: ColorScheme = isDark ? DARK : LIGHT;
 
-export { isDark, SCHEME, DARK, LIGHT };
+export { isDark, subscribeToDarkModeChange, SCHEME, DARK, LIGHT };
