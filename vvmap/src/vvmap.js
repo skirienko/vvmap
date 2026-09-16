@@ -1,5 +1,5 @@
 import mapstyleLightURL from './posi.json';
-import mapstyleDarkURL from './fiord.json';
+import mapstyleDarkURL from './nega.json';
 
 import capesURL from './capes.geojson?url';
 

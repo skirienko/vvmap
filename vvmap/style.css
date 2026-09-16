@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #F2F3F0;
+    --bg-color: #d9d9d7;
 
     --street-default: #333333;
     --street-red: #FF3333;
@@ -21,6 +21,7 @@ ul.legend {
     background: var(--bg-color);
     padding: 10px 15px 10px 25px;
     border-radius: 7px;
+    box-shadow: inset 0 0 .5px 1px #FFFFFF13, 0 4px 8px 0 #00000014, 0 6px 20px 0 #00000013;
 }
 ul.legend:empty { display: none; }
 ul.legend li {
@@ -56,7 +57,7 @@ select.switcher {
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg-color: #121111;
+        --bg-color: #262624;
 
         --street-default: #808080;
         --street-red: #cc2929;
