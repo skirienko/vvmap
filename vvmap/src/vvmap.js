@@ -1,6 +1,6 @@
 import mapstyleLightURL from './posi.json';
 import mapstyleDarkURL from './nega.json';
-
+// @ts-ignore
 import capesURL from './capes.geojson?url';
 
 import {Map, Popup, setWorkerUrl} from 'maplibre-gl';
@@ -30,6 +30,7 @@ const getMapStyle = (isDark) => isDark ? mapstyleDarkURL : mapstyleLightURL;
 subscribeToDarkModeChange((isDark) => {
   if (map) {
     map.setStyle(getMapStyle(isDark));
+    loadCapes();
     initMap(T.constructor);
   }
 })
@@ -79,30 +80,37 @@ map.on('mouseleave', layerId, (e) => {
 });
 
 function loadCapes() {
-  const srcId = 'src-capes'
-  map.addSource(srcId, {
-    type: 'geojson',
-    data: capesURL,
-  });
-  map.addLayer({
-    id: 'cape_name_label',
-    type: 'symbol',
-    source: srcId,
-    minzoom: 10,
-    layout: {
-      "symbol-placement": "line",
-      "text-field": [
-        "case",
-        ["has", "name:ru"],
-        ["get", "name:ru"],
-        ["get", "name"]
-      ],
-      "text-font": ["Noto Sans Regular"],
-    },
-    paint: {
-      "text-color": "#009933",
-    }
-  });
+  const srcId = 'src-capes';
+  const layerId = 'cape_name_label';
+  if (!map.getSource(srcId)) {
+    map.addSource(srcId, {
+      type: 'geojson',
+      data: capesURL,
+    });
+  }
+  if (!map.getLayer(layerId)) {
+    map.addLayer({
+      id: layerId,
+      type: 'symbol',
+      source: srcId,
+      minzoom: 15,
+      layout: {
+        "symbol-placement": "point",
+        "text-field": [
+          "case",
+          ["has", "name:ru"],
+          ["get", "name:ru"],
+          ["get", "name"]
+        ],
+        "text-font": ["Noto Sans Regular"],
+        "text-radial-offset": 2,
+        "text-anchor":  ['get', 'anchor'],
+      },
+      paint: {
+        "text-color": "#666666",
+      }
+    });
+  }
 }
 
 function loadLayer(T) {
