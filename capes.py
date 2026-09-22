@@ -3,12 +3,35 @@ import json
 path = 'justcapes.osm'
 capes = []
 
+# default: left
 ANCHORS = {
+    'мыс Артур': 'bottom-right',
     'мыс Абросимова': 'right',
+    'мыс Безымянный': 'bottom-right',
+    'мыс Боброва': 'bottom-right',
+    'мыс Бурный': 'bottom-right',
+    'мыс Вязкий': 'bottom-right',
     'мыс Голдобина': 'top-right',
+    'мыс Грозный': 'top-right',
+    'мыс Дальний': 'bottom-left',
+    'мыс Калузина': 'right',
     'мыс Клета': 'right',
+    'мыс Клыкова': 'right',
+    'мыс Красный': 'bottom-right',
+    'мыс Кузнецова': 'right',
     'мыс Купера': 'bottom-right',
+    'мыс Лагерный': 'bottom-right',
+    'мыс Марковского': 'bottom-right',
+    'мыс Назимова': 'top-right',
     'мыс Острый': 'top-right',
+    'мыс Россета': 'bottom-right',
+    'мыс Соловьёва': 'top-right',
+    'мыс Спорный': 'bottom-right',
+    'мыс Токаревского': 'right',
+    'мыс Тупой': 'bottom-right',
+    'мыс Фирсова': 'bottom-right',
+    'мыс Чуркина': 'right',
+    'мыс Щетининой': 'right',
 }
 
 
