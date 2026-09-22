@@ -93,7 +93,7 @@ function loadCapes() {
       id: layerId,
       type: 'symbol',
       source: srcId,
-      minzoom: 15,
+      minzoom: 14,
       layout: {
         "symbol-placement": "point",
         "text-field": [
