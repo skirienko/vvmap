@@ -7,10 +7,10 @@ capes = []
 ANCHORS = {
     'мыс Артур': 'bottom-right',
     'мыс Абросимова': 'right',
-    'мыс Безымянный': 'bottom-right',
+    'мыс Безымянный': 'right',
     'мыс Боброва': 'bottom-right',
     'мыс Бурный': 'bottom-right',
-    'мыс Вязкий': 'bottom-right',
+    'мыс Вязкий': 'right',
     'мыс Голдобина': 'top-right',
     'мыс Грозный': 'top-right',
     'мыс Дальний': 'bottom-left',

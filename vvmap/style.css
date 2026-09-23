@@ -1,5 +1,6 @@
 :root {
     --bg-color: #d9d9d7;
+    --text-color: #333333;
 
     --street-default: #333333;
     --street-red: #FF3333;
@@ -40,7 +41,6 @@ select.switcher {
     ul.legend {max-width: 10em; font-size:9pt}
 }
 
-
 .map {
     --map-background: rgb(242, 243, 240);
     --map-park: rgb(230, 233, 229);
@@ -55,9 +55,28 @@ select.switcher {
     --map-label-city-halo: #fff;
 }
 
+.maplibregl-popup {
+    .maplibregl-popup-content {
+        background: var(--bg-color);
+        color: var(--text-color);
+        border-radius: 7px;
+
+        .maplibregl-popup-close-button {
+            color: var(--text-color);
+        }
+    }
+}
+.maplibregl-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+    border-top-color: var(--bg-color);
+}
+.maplibregl-popup.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+    border-bottom-color: var(--bg-color);
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --bg-color: #262624;
+        --text-color: #EEEEEE;
 
         --street-default: #808080;
         --street-red: #cc2929;
