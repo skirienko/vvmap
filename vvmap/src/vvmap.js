@@ -93,7 +93,7 @@ function loadCapes() {
       id: layerId,
       type: 'symbol',
       source: srcId,
-      minzoom: 14,
+      minzoom: 13,
       layout: {
         "symbol-placement": "point",
         "text-field": [
@@ -103,7 +103,8 @@ function loadCapes() {
           ["get", "name"]
         ],
         "text-font": ["Noto Sans Regular"],
-        "text-radial-offset": 2,
+        "text-size": ["interpolate", ["linear"], ["zoom"], 13, 12, 16, 15],
+        "text-radial-offset": ["interpolate", ["exponential", 1.4], ["zoom"], 13, .5, 20, 5],
         "text-anchor":  ['get', 'anchor'],
       },
       paint: {
