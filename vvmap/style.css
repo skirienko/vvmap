@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #d9d9d7;
+    --bg-color: #ebebeb;
     --text-color: #333333;
 
     --street-default: #333333;
@@ -60,6 +60,7 @@ select.switcher {
         background: var(--bg-color);
         color: var(--text-color);
         border-radius: 7px;
+        box-shadow: inset 0 0 .5px 1px #FFFFFF13, 0 4px 8px 0 #00000014, 0 6px 20px 0 #00000013;
 
         .maplibregl-popup-close-button {
             color: var(--text-color);

@@ -121,7 +121,7 @@ def generate_geojson(topic, store):
         for name in unknown:
             ud.write(f'{name}\r\n')
 
-    with open(f'unused_streets_{topic}.txt', 'w') as uud:
+    with open(f'absent_on_map_streets_{topic}.txt', 'w') as uud:
         for key in store.keys():
             if store[key]['used'] == 0:
                 i = store[key]
