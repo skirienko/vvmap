@@ -67,12 +67,10 @@ select.switcher {
         }
     }
 }
-.maplibregl-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
-    border-top-color: var(--bg-color);
-}
-.maplibregl-popup.maplibregl-popup-anchor-top .maplibregl-popup-tip {
-    border-bottom-color: var(--bg-color);
-}
+.maplibregl-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip { border-top-color: var(--bg-color) }
+.maplibregl-popup.maplibregl-popup-anchor-top .maplibregl-popup-tip { border-bottom-color: var(--bg-color) }
+.maplibregl-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: var(--bg-color) }
+.maplibregl-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: var(--bg-color) }
 
 @media (prefers-color-scheme: dark) {
     :root {
