@@ -27,5 +27,7 @@ Mirror sites:
 * https://z.overpass-api.de/api/
 * https://maps.mail.ru/osm/tools/overpass/api/
 * https://overpass.osm.rambler.ru/cgi/
+* https://overpass.private.coffee/api/
+* http://overpass.openstreetmap.fr/api/ # unavailable
 
 Source: https://cadshift.com/blog/qgis-overpass-406-not-acceptable-mirror-endpoints/
