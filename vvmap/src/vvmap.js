@@ -38,6 +38,7 @@ subscribeToDarkModeChange((isDark) => {
 const map = new Map({
   container: 'map',
   style: getMapStyle(isDark),
+  attributionControl: { compact: true },
   center: [131.905, 43.103],
   zoom: 12
 });
