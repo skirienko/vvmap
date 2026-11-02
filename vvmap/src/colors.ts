@@ -8,7 +8,7 @@ const subscribeToDarkModeChange: (listener: (isDark: boolean) => any) => void = 
     }
 }
 
-type ColorName = 'default' | 'red' | 'blue' | 'green' | 'purple' | 'yellow' | 'peach' | 'neutral';
+type ColorName = 'default' | 'red' | 'blue' | 'green' | 'purple' | 'yellow' | 'orange' | 'peach' | 'neutral';
 type ColorScheme = Record<ColorName, string>;
 
 const LIGHT: ColorScheme = {
@@ -18,6 +18,7 @@ const LIGHT: ColorScheme = {
     green: '#33DD33',
     purple: '#CC33CC',
     yellow: '#FFDD66',
+    orange: '#ff8f33',
     peach: '#cc9c72',
     neutral: '#99AA99',
 };
@@ -28,6 +29,7 @@ const DARK: ColorScheme = {
     green: '#2a802a',
     purple: '#802080',
     yellow: '#a88f32',
+    orange: '#99561f',
     peach: '#805e40',
     neutral: '#738073',
 };

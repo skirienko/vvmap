@@ -15,9 +15,10 @@ const topic = 'year';
 
 const legend: Legend = {
   '1860': {from: '1860', to: '1907', color: '#1fc627', description: '1860—1907'},
-  '1908': {from: '1908', to: '1921', color: '#0d7719', description: '1908—1921'},
-  '1918': {from: '1918', to: '1923', color: '#ebcc04', description: '1918—1923'},
-  '1924': {from: '1924', to: '1940', color: '#f90505', description: '1924—1940'},
+  '1908': {from: '1908', to: '1917', color: '#0d7719', description: '1908—1917'},
+  '1918': {from: '1918', to: '1922', color: '#ebcc04', description: '1918—1922'},
+  '1923': {from: '1923', to: '1924', color: '#ff8f33', description: '1923—1924'},
+  '1925': {from: '1925', to: '1940', color: '#f90505', description: '1924—1940'},
   '1941': {from: '1941', to: '1952', color: '#d40b0b', description: '1941—1952'},
   '1953': {from: '1953', to: '1960', color: '#ba0b0b', description: '1953—1960'},
   '1961': {from: '1961', to: '1984', color: '#942b10', description: '1961—1984'},
@@ -37,6 +38,8 @@ const ML_YEAR: ExpressionSpecification = [
   '#0d7719',
     1922,
   '#ebcc04',
+    1923,
+  '#ff8f33',
     1924,
   '#f90505',
     1941,
